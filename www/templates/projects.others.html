@@ -1,0 +1,11 @@
+<ion-view view-title="项目">
+  <ion-content>
+    <ion-list>
+      <ion-item ng-repeat="project in projects" class="item-thumbnail-left">
+        <img src="{{project.imgUrl}}" />
+        <h2 ng-bind="project.name"></h2>
+        <p ng-bind="project.description"></p>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

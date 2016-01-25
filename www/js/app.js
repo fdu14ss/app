@@ -22,7 +22,23 @@ angular.module('starter', ['ionic', 'starter.controllers'])
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+
+  //使得导航栏在不同平台中适配标准
+  $ionicConfigProvider.platform.ios.tabs.style('standard');
+  $ionicConfigProvider.platform.ios.tabs.position('bottom');
+  $ionicConfigProvider.platform.android.tabs.style('standard');
+  $ionicConfigProvider.platform.android.tabs.position('standard');
+
+  $ionicConfigProvider.platform.ios.navBar.alignTitle('center');
+  $ionicConfigProvider.platform.android.navBar.alignTitle('left');
+
+  $ionicConfigProvider.platform.ios.backButton.previousTitleText('').icon('ion-ios-arrow-thin-left');
+  $ionicConfigProvider.platform.android.backButton.previousTitleText('').icon('ion-android-arrow-back');
+
+  $ionicConfigProvider.platform.ios.views.transition('ios');
+  $ionicConfigProvider.platform.android.views.transition('android');
+
   $stateProvider
 
     .state('app', {
@@ -31,43 +47,50 @@ angular.module('starter', ['ionic', 'starter.controllers'])
     templateUrl: 'templates/menu.html',
     controller: 'AppCtrl'
   })
-
-  .state('app.search', {
-    url: '/search',
+  .state('app.projects', {
+    url: '/projects',
+    abstract: true,
     views: {
       'menuContent': {
-        templateUrl: 'templates/search.html'
+        templateUrl: 'templates/projects.html',
       }
     }
   })
-
-  .state('app.browse', {
-      url: '/browse',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/browse.html'
-        }
-      }
-    })
-    .state('app.playlists', {
-      url: '/playlists',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/playlists.html',
-          controller: 'PlaylistsCtrl'
-        }
-      }
-    })
-
-  .state('app.single', {
-    url: '/playlists/:playlistId',
+  .state('app.projects.me', {
+    url: '/me',
     views: {
-      'menuContent': {
-        templateUrl: 'templates/playlist.html',
-        controller: 'PlaylistCtrl'
+      'me': {
+        templateUrl: 'templates/projects.me.html',
+        controller: 'ProjectsMeCtrl'
       }
     }
-  });
+  })
+  .state('app.projects.others', {
+    url: '/others',
+    views: {
+      'others': {
+        templateUrl: 'templates/projects.others.html',
+        controller: 'ProjectsOthersCtrl'
+      }
+    }
+  })
+  .state('app.notice', {
+      url: '/notice',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/notice.html'
+        }
+      }
+    })
+    .state('app.plans', {
+      url: '/plans',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/plans.html',
+          controller: 'PlansCtrl'
+        }
+      }
+    });
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/playlists');
+  $urlRouterProvider.otherwise('/app/projects/me');
 });

@@ -29,6 +29,11 @@ angular.module('starter.controllers', [])
     $scope.modal.show();
   };
 
+  //打开注册页面
+  $scope.register = function() {
+    alert("暂未实现");
+  };
+
   // Perform the login action when the user submits the login form
   $scope.doLogin = function() {
     console.log('Doing login', $scope.loginData);
@@ -40,9 +45,48 @@ angular.module('starter.controllers', [])
     }, 1000);
   };
 })
+.controller('ProjectsMeCtrl', function($scope) {
+    $scope.projects = [
+      {
+        id: 1,
+        imgUrl:"img/projects/ionic.png",
+        name:"Demo",
+        pageNumber:1,
+        description: "我是一个测试项目，我是测试项目1号"
+      },
+      {
+        id: 2,
+        imgUrl:"img/projects/ionic.png",
+        name:"example",
+        pageNumber:3,
+        description: "我是一个测试项目，我是测试项目2号"
+      }
+    ];
 
-.controller('PlaylistsCtrl', function($scope) {
-  $scope.playlists = [
+    $scope.edit = function(id) {
+      alert("你要编辑"+id);
+    };
+})
+.controller('ProjectsOthersCtrl', function($scope) {
+  $scope.projects = [
+    {
+      id: 1,
+      imgUrl:"img/projects/ionic.png",
+      name:"DemoOthers",
+      pageNumber:1,
+      description: "我是一个测试项目，我是测试项目3号"
+    },
+    {
+      id: 2,
+      imgUrl:"img/projects/ionic.png",
+      name:"exampleOthers",
+      pageNumber:31,
+      description: "我是一个测试项目，我是测试项目1号"
+    }
+  ];
+})
+.controller('PlansCtrl', function($scope) {
+  $scope.plans = [
     { title: 'Reggae', id: 1 },
     { title: 'Chill', id: 2 },
     { title: 'Dubstep', id: 3 },
@@ -50,7 +94,4 @@ angular.module('starter.controllers', [])
     { title: 'Rap', id: 5 },
     { title: 'Cowbell', id: 6 }
   ];
-})
-
-.controller('PlaylistCtrl', function($scope, $stateParams) {
 });
