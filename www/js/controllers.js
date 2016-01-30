@@ -64,7 +64,8 @@ angular.module('starter.controllers', [])
     ];
 
     $scope.edit = function(id) {
-      alert("你要编辑"+id);
+      //alert("你要编辑"+id);
+      window.location.href = "#app/edit";
     };
 })
 .controller('ProjectsOthersCtrl', function($scope) {
