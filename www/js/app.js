@@ -47,33 +47,6 @@ angular.module('starter', ['ionic', 'starter.controllers','stater.editRouters','
     templateUrl: 'templates/menu.html',
     controller: 'AppCtrl'
   })
-  .state('app.projects', {
-    url: '/projects',
-    abstract: true,
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/projects.html',
-      }
-    }
-  })
-  .state('app.projects.me', {
-    url: '/me',
-    views: {
-      'me': {
-        templateUrl: 'templates/projects.me.html',
-        controller: 'ProjectsMeCtrl'
-      }
-    }
-  })
-  .state('app.projects.others', {
-    url: '/others',
-    views: {
-      'others': {
-        templateUrl: 'templates/projects.others.html',
-        controller: 'ProjectsOthersCtrl'
-      }
-    }
-  })
   .state('app.notice', {
       url: '/notice',
       views: {

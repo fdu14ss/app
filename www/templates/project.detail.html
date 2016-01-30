@@ -1,0 +1,9 @@
+<ion-view view-title="项目详细(项目名)">
+  <ion-content>
+    <div class="row" ng-repeat="imgSet in project.images">
+      <div class="col" ng-repeat="img in imgSet" ng-click="edit(img.id)">
+        <img src="{{img.path}}" style="height: 180px;">
+      </div>
+    </div>
+  </ion-content>
+</ion-view>
