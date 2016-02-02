@@ -4,7 +4,11 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
+<<<<<<< HEAD
 angular.module('starter', ['ionic', 'starter.controllers'])
+=======
+angular.module('starter', ['ionic', 'starter.controllers','stater.editRouters','starter.editControllers'])
+>>>>>>> origin/member/duocai
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -41,12 +45,17 @@ angular.module('starter', ['ionic', 'starter.controllers'])
 
   $stateProvider
 
+<<<<<<< HEAD
   .state('app', {
+=======
+    .state('app', {
+>>>>>>> origin/member/duocai
     url: '/app',
     abstract: true,
     templateUrl: 'templates/menu.html',
     controller: 'AppCtrl'
   })
+<<<<<<< HEAD
   .state('app.projects', {
     url: '/projects',
     abstract: true,
@@ -74,6 +83,8 @@ angular.module('starter', ['ionic', 'starter.controllers'])
       }
     }
   })
+=======
+>>>>>>> origin/member/duocai
   .state('app.notice', {
       url: '/notice',
       views: {

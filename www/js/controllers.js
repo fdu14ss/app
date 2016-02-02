@@ -1,5 +1,6 @@
 angular.module('starter.controllers', [])
 
+<<<<<<< HEAD
 .factory('Projects', function() {
       return {
         load: function() {
@@ -16,6 +17,8 @@ angular.module('starter.controllers', [])
     }
 )
 
+=======
+>>>>>>> origin/member/duocai
 .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
 
   // With the new view caching in Ionic, Controllers are only called
@@ -32,17 +35,29 @@ angular.module('starter.controllers', [])
   $ionicModal.fromTemplateUrl('templates/login.html', {
     scope: $scope
   }).then(function(modal) {
+<<<<<<< HEAD
     $scope.loginModal = modal;
+=======
+    $scope.modal = modal;
+>>>>>>> origin/member/duocai
   });
 
   // Triggered in the login modal to close it
   $scope.closeLogin = function() {
+<<<<<<< HEAD
     $scope.loginModal.hide();
+=======
+    $scope.modal.hide();
+>>>>>>> origin/member/duocai
   };
 
   // Open the login modal
   $scope.login = function() {
+<<<<<<< HEAD
     $scope.loginModal.show();
+=======
+    $scope.modal.show();
+>>>>>>> origin/member/duocai
   };
 
   //打开注册页面
@@ -61,6 +76,7 @@ angular.module('starter.controllers', [])
     }, 1000);
   };
 })
+<<<<<<< HEAD
 .controller('ProjectsMeCtrl', function($scope, $ionicModal, Projects) {
 
     $ionicModal.fromTemplateUrl('templates/create-project.html', {
@@ -142,6 +158,9 @@ angular.module('starter.controllers', [])
     }
   ];
 })
+=======
+
+>>>>>>> origin/member/duocai
 .controller('PlansCtrl', function($scope) {
   $scope.plans = [
     { title: 'Reggae', id: 1 },
