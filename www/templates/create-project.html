@@ -1,0 +1,21 @@
+<ion-modal-view>
+    <ion-header-bar class="bar-secondary">
+        <h1 class="title">新的项目</h1>
+        <button class="button button-clear button-positive" ng-click="closeNewProject()">取消</button>
+    </ion-header-bar>
+    <ion-content>
+        <form ng-submit="createProject(project)">
+            <div class="list">
+                <label class="item item-input">
+                    <input type="text" placeholder="项目名称" ng-model="project.name">
+                </label>
+                <label class="item item-input">
+                    <input type="text" placeholder="项目描述" ng-model="project.description">
+                </label>
+            </div>
+            <div class="padding">
+                <button type="submit" class="button button-block button-positive">完成</button>
+            </div>
+        </form>
+    </ion-content>
+</ion-modal-view>
