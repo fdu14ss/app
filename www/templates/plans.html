@@ -1,4 +1,16 @@
 <ion-view view-title="计划">
+  <ion-nav-bar class="bar-positive">
+    <ion-nav-buttons side="left">
+      <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
+      </button>
+    </ion-nav-buttons>
+
+    <ion-nav-buttons side="right">
+      <button class="button button-icon ion-compose" side="right" ng-click="">
+      </button>
+    </ion-nav-buttons>
+  </ion-nav-bar>
+
   <ion-content>
     <ion-list>
       <ion-item ng-repeat="plan in plans">

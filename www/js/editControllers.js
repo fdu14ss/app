@@ -131,12 +131,14 @@ angular.module('starter.editControllers', [])
     };
 
     $scope.edit = function(id) {
-
       window.location.href="#app/projectEdit";
     }
 
   })
   .controller('projectEditCtrl', function($scope) {
-
-
+    $scope.edit = function() {
+      var c = ionic.tap.pointerCoord(event);
+      console.log(event);
+      alert(angular.toJson(event));
+    }
   });
