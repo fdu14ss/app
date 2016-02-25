@@ -6,29 +6,48 @@ angular.module('starter.editControllers', [])
 
   .factory('Projects', function() {
     return {
-      load: function() {
+      loadProject: function() {
         var data = window.localStorage['projects'];
         if(data) {
           return angular.fromJson(data);
         }
         return [];
       },
-      save: function(projects) {
+      saveProject: function(projects) {
         window.localStorage['projects'] = angular.toJson(projects);
       }
     }
   })
 
-  .controller('ProjectsMeCtrl', function($scope, $ionicModal, $ionicPopup, Projects) {
+  .factory('Boxes', function() {
+    return {
+      loadBox: function() {
+        var box = window.localStorage['boxes'];
+        if(box) {
+          return angular.fromJson(box);
+        }
+        return [];
+      },
+      saveBox: function(boxes) {
+        window.localStorage['boxes'] = angular.toJson(boxes);
+      }
+    }
+  })
+
+  .controller('ProjectsMeCtrl', function($scope, $rootScope, $ionicModal, $ionicPopup, Projects) {
     $ionicModal.fromTemplateUrl('templates/create-project.html', {
       scope: $scope
     }).then(function(modal) {
       $scope.projectModal = modal;
     });
 
-    $scope.projects = Projects.load();
+    /*
+    从数据库加载该用户的所有项目
+     */
+    $scope.projects = Projects.loadProject();
 
     $scope.edit = function(id) {
+      $rootScope.projectId = id;
       window.location.href = "#app/projectDetail";
     };
 
@@ -46,7 +65,7 @@ angular.module('starter.editControllers', [])
           else {
             $scope.projects = [];
           }
-          Projects.save($scope.projects);
+          Projects.saveProject($scope.projects);
         }
       })
     };
@@ -71,12 +90,13 @@ angular.module('starter.editControllers', [])
             }
         );
         $scope.projectModal.hide();
-        Projects.save($scope.projects);
+        Projects.saveProject($scope.projects);
         project.name = "";
         project.description = "";
       }
     };
   })
+
   .controller('ProjectsOthersCtrl', function($scope) {
     $scope.projects = [
       {
@@ -95,7 +115,11 @@ angular.module('starter.editControllers', [])
       }
     ];
   })
-  .controller('projectDetailCtrl',function($scope) {
+
+  .controller('projectDetailCtrl',function($scope, $rootScope) {
+    /*
+    从数据库加载
+     */
     $scope.project = {
       name: 'demo1',
       images: [
@@ -131,14 +155,72 @@ angular.module('starter.editControllers', [])
     };
 
     $scope.edit = function(id) {
+      $rootScope.imgId = id;
       window.location.href="#app/projectEdit";
     }
 
   })
-  .controller('projectEditCtrl', function($scope) {
-    $scope.edit = function() {
-      var c = ionic.tap.pointerCoord(event);
-      console.log(event);
-      alert(angular.toJson(event));
-    }
+  .controller('projectEditCtrl', function($scope, $ionicPopover, Boxes) {
+      $ionicPopover.fromTemplateUrl('templates/popover.html', {
+        scope: $scope,
+      }).then(function(popover) {
+        $scope.popover = popover;
+      });
+
+      $scope.boxes = Boxes.loadBox();
+      /*var htmlboxes = angular.element(['.box']);
+      alert(htmlboxes.length);
+      angular.forEach(htmlboxes, function(htmlbox, index){
+        var curBox = $scope.boxes[index];
+        htmlbox.css("left", curBox.left);
+        htmlbox.css({
+          "left": curBox.left,
+          "top": curBox.top,
+          "width": curBox.width,
+          "height": curBox.height
+        });
+      });*/
+
+      $scope.edit = function(){
+        var coordinate = {x:0, y:0};
+        coordinate.x = event.gesture.touches[0].pageX;
+        coordinate.y = event.gesture.touches[0].pageY;
+        $scope.boxes.push(
+            {
+              id: $scope.boxes.length+1,
+              top: coordinate.x,
+              left: coordinate.y,
+              width: 50,
+              height: 50,
+              link: -1
+            }
+        );
+        Boxes.saveBox($scope.boxes);
+      }
+
+      $scope.setCurrentBox = function(index) {
+        $scope.currentIndex = index;
+      }
+
+      $scope.deleteBox = function() {
+        var allBox = $scope.boxes;
+        var id = $scope.currentIndex;
+        if(allBox.length!=1) {
+          $scope.boxes = allBox.slice(0, id-1).concat(allBox.slice(id, allBox.length));
+        }
+        else {
+          $scope.boxes = [];
+        }
+        Boxes.saveBox($scope.boxes);
+      }
+
+      $scope.skip = function(){
+        window.location.href = "#app/projectLink";
+      }
+
+      $scope.linkTo = function(index) {
+        $scope.boxes[$scope.currentIndex].link = index;
+        Boxes.saveBox($scope.boxes);
+        window.location.href="#/app/projectEdit";
+      }
   });

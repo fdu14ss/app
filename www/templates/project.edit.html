@@ -1,11 +1,21 @@
 <ion-view view-title="编辑项目(项目名)">
   <ion-content scroll="false">
-    <div  on-tap="edit()">
-      <div>
+    <div id="container" on-tap="edit()">
+      <div id="image">
         <img src="img/projects/demo.png" style="height: 540px;">
       </div>
-      <div>
+      <div class="box" ng-repeat="box in boxes" on-tap="popover.show($event);setCurrentBox($index)">
       </div>
     </div>
   </ion-content>
+  <script id="templates/popover.html" type="text/ng-template">
+    <ion-popover-view id="popover">
+      <ion-content>
+        <ul>
+          <li id="popover-first" on-tap="popover.hide();deleteBox()">删除</li>
+          <li on-tap="popover.hide();skip()">设置链接</li>
+        </ul>
+      </ion-content>
+    </ion-popover-view>
+  </script>
 </ion-view>

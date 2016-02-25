@@ -52,5 +52,14 @@ angular.module('stater.editRouters', [])
             controller: 'projectEditCtrl'
           }
         }
+      })
+      .state('app.projectLink', {
+        url: '/projectLink',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/project.link.html',
+            controller: 'projectEditCtrl'
+          }
+        }
       });
   });
