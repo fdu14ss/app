@@ -33,3 +33,14 @@
 #popover-first{
     border-right: 1px dashed;
 }
+
+#share{
+    line-height: 180%;
+    height: 180%;
+    font-size: 14pt;
+}
+
+.footerbuttons{
+    width: 50%;
+    text-align: center;
+}

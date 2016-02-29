@@ -61,6 +61,11 @@ angular.module('starter.editControllers', [])
           var pj = $scope.projects;
           if(pj.length!=1) {
             $scope.projects = pj.slice(0, id-1).concat(pj.slice(id, pj.length));
+            angular.forEach($scope.projects, function(item){
+              if(item.id > id){
+                item.id -= 1;
+              }
+            });
           }
           else {
             $scope.projects = [];
@@ -167,7 +172,7 @@ angular.module('starter.editControllers', [])
         $scope.popover = popover;
       });
 
-      $scope.boxes = Boxes.loadBox();
+      $scope.boxes = [];
       /*var htmlboxes = angular.element(['.box']);
       alert(htmlboxes.length);
       angular.forEach(htmlboxes, function(htmlbox, index){
@@ -181,17 +186,24 @@ angular.module('starter.editControllers', [])
         });
       });*/
 
+      //var htmlboxes = angular.element(['.box']);
+      //angular.forEach(htmlboxes, function(htmlbox, index) {
+      //  $scope.b
+      //});
+
       $scope.edit = function(){
         var coordinate = {x:0, y:0};
         coordinate.x = event.gesture.touches[0].pageX;
         coordinate.y = event.gesture.touches[0].pageY;
+        console.log("x: " + coordinate.x + "y" + coordinate.y);
+        //console.log(angular.toJson(event));
         $scope.boxes.push(
             {
               id: $scope.boxes.length+1,
-              top: coordinate.x,
-              left: coordinate.y,
-              width: 50,
-              height: 50,
+              top: coordinate.y + "px",
+              left: coordinate.x + "px",
+              width: "50px",
+              height: "50px",
               link: -1
             }
         );

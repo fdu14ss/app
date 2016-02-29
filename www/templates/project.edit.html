@@ -4,7 +4,8 @@
       <div id="image">
         <img src="img/projects/demo.png" style="height: 540px;">
       </div>
-      <div class="box" ng-repeat="box in boxes" on-tap="popover.show($event);setCurrentBox($index)">
+      <div class="box" ng-repeat="box in boxes" on-tap="popover.show($event);setCurrentBox($index)"
+           style="left:{{box.left}}; top:{{box.top}}; width:{{box.width}}; height:{{box.height}}">
       </div>
     </div>
   </ion-content>
