@@ -11,7 +11,7 @@
   </ion-nav-bar>
 
   <ion-content>
-    <div class="row" ng-repeat="imgSet in project.images">
+    <div class="row" ng-repeat="imgSet in currentProject.images">
       <div class="col" ng-repeat="img in imgSet" ng-click="edit(img.id)">
         <img src="{{img.path}}" style="height: 180px;">
       </div>
