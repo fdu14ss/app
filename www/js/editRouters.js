@@ -58,7 +58,7 @@ angular.module('stater.editRouters', [])
         views: {
           'menuContent': {
             templateUrl: 'templates/project.link.html',
-            controller: 'projectEditCtrl'
+            controller: 'projectLinkCtrl'
           }
         }
       });

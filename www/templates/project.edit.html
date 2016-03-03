@@ -2,10 +2,12 @@
   <ion-content scroll="false">
     <div id="container" on-tap="newBox()">
       <div id="image">
-        <img src="img/projects/demo.png" style="height: 540px;">
+        <img src="{{curImg.path}}" style="height: 540px;">
       </div>
-      <div class="box" ng-repeat="box in boxes" on-tap="popover.show($event);setCurrentBox($index)"
-           style="left:{{box.left}}; top:{{box.top}}; width:{{box.width}}; height:{{box.height}}">
+      <div class="box" ng-repeat="box in curImg.boxes" on-tap="openPopover($event);setCurrentBox(box.id)"
+           style="left:{{box.left}}; top:{{box.top}}; width:{{box.wide}}; height:{{box.high}}">
+        <div class="point" style="left: -5px;top: -5px" on-tap="move($event, $element)">
+        </div>
       </div>
     </div>
   </ion-content>
@@ -13,8 +15,8 @@
     <ion-popover-view id="popover">
       <ion-content>
         <ul>
-          <li id="popover-first" on-tap="popover.hide();deleteBox()">删除</li>
-          <li on-tap="popover.hide();skip()">设置链接</li>
+          <li id="popover-first" on-tap="closePopover();deleteBox()">删除</li>
+          <li on-tap="closePopover();skip()">设置链接</li>
         </ul>
       </ion-content>
     </ion-popover-view>

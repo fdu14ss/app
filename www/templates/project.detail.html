@@ -6,23 +6,27 @@
     </ion-nav-buttons>
 
     <ion-nav-buttons side="right">
-      <span id="share">Share</span>
+      <button class="button button-icon button-clear ion-share">
+      </button>
+      <button class="button button-icon button-clear ion-android-add">
+      </button>
     </ion-nav-buttons>
   </ion-nav-bar>
 
   <ion-content>
-    <div class="row" ng-repeat="imgSet in currentProject.images">
+    <!--<div class="row" ng-repeat="imgSet in currentProject.images">
       <div class="col" ng-repeat="img in imgSet" ng-click="edit(img.id)">
         <img src="{{img.path}}" style="height: 180px;">
       </div>
     </div>
+    -->
+    <div ng-repeat="img in curpj.images" ng-click="edit(img.id)">
+      <img src="{{img.path}}" style="height: 180px;">
+    </div>
   </ion-content>
 
-  <ion-footer-bar class="bar-dark">
-    <div class="footerbuttons">
-      <button class="button button-icon button-clear ion-plus"></button>
-    </div>
-    <div class="footerbuttons">
+  <ion-footer-bar class="bar-positive">
+    <div class="title">
       <button class="button button-icon button-clear ion-play"></button>
     </div>
   </ion-footer-bar>
