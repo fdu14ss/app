@@ -23,26 +23,30 @@ angular.module('starter.editControllers', [])
     return {
       restrict: 'A',
       link: function($scope, $element) {
+        var styleHeight = $element[0].parentNode.style.height.toString(),
+            styleWidth = $element[0].parentNode.style.width.toString();
 
         $timeout(function() {
-          var square = $element[0],
-              posX = 0,
+          var posX = 0,
               posY = 0,
               lastPosX = 0,
               lastPosY = 0,
-              bufferX = 0,
-              bufferY = 0,
               scale = 1,
               lastScale,
-              rotation = 0,
-              last_rotation, dragReady = 0;
+              rotation = 0;
           ionic.onGesture('touch drag transform dragend', function(e) {
-            //e.gesture.srcEvent.preventDefault();
-            //e.gesture.preventDefault();
+            e.gesture.srcEvent.preventDefault();
+            e.gesture.preventDefault();
             switch (e.type) {
               case 'drag':
                 posX = e.gesture.deltaX + lastPosX;
                 posY = e.gesture.deltaY + lastPosY;
+                e.target.parentNode.style.height =
+                    parseInt(styleHeight.substring(0,styleHeight.length-2))
+                    + e.gesture.deltaY + "px";
+                e.target.parentNode.style.width =
+                    parseInt(styleWidth.substring(0,styleWidth.length-2))
+                    + e.gesture.deltaX + "px";
                 break;
               case 'dragend':
                 lastPosX = posX;
@@ -55,7 +59,7 @@ angular.module('starter.editControllers', [])
                 "scale(" + scale + ")" +
                 "rotate(" + rotation + "deg) ";
             e.target.style.transform = transform;
-            //e.target.style.webkitTransform = transform;
+            e.target.style.webkitTransform = transform;
           }, $element[0]);
         });
       }
@@ -185,7 +189,7 @@ angular.module('starter.editControllers', [])
     }
 
   })
-  .controller('projectEditCtrl', function($scope, $rootScope, $ionicPopover, Projects) {
+  .controller('projectEditCtrl', function($scope, $rootScope, $ionicPopover, Projects, $timeout) {
       $ionicPopover.fromTemplateUrl('templates/popover.html', {
         scope: $scope,
       }).then(function(popover) {
@@ -247,39 +251,53 @@ angular.module('starter.editControllers', [])
         window.location.href = "#app/projectLink";
       };
 
-      $scope.move = function(e, $element) {
-        var square = $element[0],
-            posX = 0,
-            posY = 0,
-            lastPosX = 0,
-            lastPosY = 0,
-            bufferX = 0,
-            bufferY = 0,
-            scale = 1,
-            lastScale,
-            rotation = 0,
-            last_rotation, dragReady = 0;
-        ionic.onGesture('touch drag transform dragend', function(e) {
-          //e.gesture.srcEvent.preventDefault();
-          //e.gesture.preventDefault();
-          switch (e.type) {
-            case 'drag':
-              posX = e.gesture.deltaX + lastPosX;
-              posY = e.gesture.deltaY + lastPosY;
-              break;
-            case 'dragend':
-              lastPosX = posX;
-              lastPosY = posY;
-              lastScale = scale;
-              break;
-          }
-          var transform =
-              "translate3d(" + posX + "px," + posY + "px, 0) " +
-              "scale(" + scale + ")" +
-              "rotate(" + rotation + "deg) ";
-          e.target.style.transform = transform;
-          //e.target.style.webkitTransform = transform;
-        }, $element[0]);
+      $scope.move = function(event, box) {
+        event = event ? event : window.event;
+        var point = event.srcElement ? event.srcElement : event.target,
+            styleHeight = point.parentNode.style.height.toString(),
+            styleWidth = point.parentNode.style.width.toString(),
+            boxHigh = box.high.toString(),
+            boxWide = box.wide.toString();
+        //console.log("before: "+boxHigh);
+        $timeout(function() {
+          var posX = 0,
+              posY = 0,
+              lastPosX = 0,
+              lastPosY = 0,
+              deltaX = 0,
+              deltaY = 0;
+          ionic.onGesture('touch drag transform dragend', function(e) {
+            e.gesture.srcEvent.preventDefault();
+            e.gesture.preventDefault();
+            switch (e.type) {
+              case 'drag':
+                deltaX = e.gesture.deltaX;
+                deltaY = e.gesture.deltaY;
+                posX = deltaX + lastPosX;
+                posY = deltaY + lastPosY;
+                break;
+              case 'dragend':
+                lastPosX = posX;
+                lastPosY = posY;
+                break;
+            }
+            var transform =
+                "translate3d(" + posX + "px," + posY + "px, 0) scale(1) rotate(0deg) ";
+            e.target.style.transform = transform;
+            e.target.style.webkitTransform = transform;
+            e.target.parentNode.style.height =
+                parseInt(styleHeight.substring(0,styleHeight.length-2))
+                + deltaY + "px";
+            box.high = parseInt(boxHigh.substring(0,boxHigh.length-2))
+                + deltaY + "px";
+            e.target.parentNode.style.width =
+                parseInt(styleWidth.substring(0,styleWidth.length-2))
+                + deltaX + "px";
+            box.wide = parseInt(boxWide.substring(0,boxWide.length-2))
+                + deltaX + "px";
+            //console.log("after: "+box.high);
+          }, point);
+        });
       }
   })
 

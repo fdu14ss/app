@@ -6,7 +6,7 @@
       </div>
       <div class="box" ng-repeat="box in curImg.boxes" on-tap="openPopover($event);setCurrentBox(box.id)"
            style="left:{{box.left}}; top:{{box.top}}; width:{{box.wide}}; height:{{box.high}}">
-        <div class="point" style="left: -5px;top: -5px" on-tap="move($event, $element)">
+        <div class="point" style="left: 45px;top: 45px" on-tap="move($event, box)">
         </div>
       </div>
     </div>
