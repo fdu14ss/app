@@ -220,6 +220,10 @@ angular.module('starter.editControllers', [])
                 wide: "50px",
                 high: "50px",
                 link: -1,
+                upLeft: {x: "-5px", y: "-5px"},
+                upRight: {x: "45px", y: "-5px"},
+                bottomLeft: {x: "-5px", y: "45px"},
+                bottomRight: {x: "45px", y: "45px"}
               }
           );
           Projects.saveProject($rootScope.projects);
@@ -251,14 +255,20 @@ angular.module('starter.editControllers', [])
         window.location.href = "#app/projectLink";
       };
 
-      $scope.move = function(event, box) {
+      /*
+       框的缩放
+       */
+      $scope.move = function(event, box, position) {
         event = event ? event : window.event;
         var point = event.srcElement ? event.srcElement : event.target,
             styleHeight = point.parentNode.style.height.toString(),
             styleWidth = point.parentNode.style.width.toString(),
+            styleLeft = point.parentNode.style.left.toString(),
+            styleTop = point.parentNode.style.top.toString(),
             boxHigh = box.high.toString(),
-            boxWide = box.wide.toString();
-        //console.log("before: "+boxHigh);
+            boxWide = box.wide.toString(),
+            boxLeft = box.left.toString(),
+            boxTop = box.top.toString();
         $timeout(function() {
           var posX = 0,
               posY = 0,
@@ -281,11 +291,122 @@ angular.module('starter.editControllers', [])
                 lastPosY = posY;
                 break;
             }
+
             var transform =
-                "translate3d(" + posX + "px," + posY + "px, 0) scale(1) rotate(0deg) ";
-            e.target.style.transform = transform;
-            e.target.style.webkitTransform = transform;
-            e.target.parentNode.style.height =
+                "translate3d(" + posX + "px," + posY + "px, 0) scale(1) rotate(0deg) ",
+                changedBoxHigh = 0,
+                changedBoxWide = 0,
+                changedBoxLeft = 0,
+                changedBoxTop = 0,
+                changedStyleHigh = 0,
+                changedStyleWide = 0,
+                parent = e.target.parentNode,
+                children = parent.childNodes;
+            //e.target.style.transform = transform;
+            //e.target.style.webkitTransform = transform;
+
+            switch (position) {
+              case 'upLeft':
+                changedBoxHigh = parseInt(boxHigh.substring(0,boxHigh.length-2)) - deltaY;
+                changedBoxWide = parseInt(boxWide.substring(0,boxWide.length-2)) - deltaX;
+                changedBoxTop = parseInt(boxTop.substring(0,boxTop.length-2)) + deltaY;
+                changedBoxLeft = parseInt(boxLeft.substring(0,boxLeft.length-2)) + deltaX;
+                changedStyleHigh = parseInt(styleHeight.substring(0,styleHeight.length-2)) - deltaY;
+                changedStyleWide = parseInt(styleWidth.substring(0,styleWidth.length-2)) - deltaX;
+
+                parent.style.left =
+                    parseInt(styleLeft.substring(0,styleLeft.length-2)) + deltaX + "px";
+                parent.style.top =
+                    parseInt(styleTop.substring(0,styleTop.length-2)) + deltaY + "px";
+                parent.style.height = changedStyleHigh + "px";
+                parent.style.width = changedStyleWide + "px";
+                children[3].style.left = changedStyleWide - 5 + "px";
+                children[5].style.top = changedStyleHigh - 5 + "px";
+                children[7].style.left = changedStyleWide - 5 + "px";
+                children[7].style.top = changedStyleHigh - 5 + "px";
+
+                box.left = changedBoxLeft + "px";
+                box.top = changedBoxTop + "px";
+                box.high = changedBoxHigh + "px";
+                box.wide = changedBoxWide + "px";
+                box.upRight.x = changedBoxWide - 5 + "px";
+                box.bottomLeft.y = changedBoxHigh - 5 + "px";
+                box.bottomRight.x = changedBoxWide - 5 + "px";
+                box.bottomRight.y = changedBoxHigh - 5 + "px";
+                break;
+              case 'upRight':
+                changedBoxHigh = parseInt(boxHigh.substring(0,boxHigh.length-2)) - deltaY;
+                changedBoxWide = parseInt(boxWide.substring(0,boxWide.length-2)) + deltaX;
+                changedBoxTop = parseInt(boxTop.substring(0,boxTop.length-2)) + deltaY;
+                changedStyleHigh = parseInt(styleHeight.substring(0,styleHeight.length-2)) - deltaY;
+                changedStyleWide = parseInt(styleWidth.substring(0,styleWidth.length-2)) + deltaX;
+
+                parent.style.top =
+                    parseInt(styleTop.substring(0,styleTop.length-2)) + deltaY + "px";
+                parent.style.height = changedStyleHigh + "px";
+                parent.style.width = changedStyleWide + "px";
+                children[3].style.left = changedStyleWide - 5 + "px";
+                children[5].style.top = changedStyleHigh - 5 + "px";
+                children[7].style.left = changedStyleWide - 5 + "px";
+                children[7].style.top = changedStyleHigh - 5 + "px";
+
+                box.top = changedBoxTop + "px";
+                box.high = changedBoxHigh + "px";
+                box.wide = changedBoxWide + "px";
+                box.upRight.x = changedBoxWide - 5 + "px";
+                box.bottomLeft.y = changedBoxHigh - 5 + "px";
+                box.bottomRight.x = changedBoxWide - 5 + "px";
+                box.bottomRight.y = changedBoxHigh - 5 + "px";
+                break;
+              case 'bottomLeft':
+                changedBoxHigh = parseInt(boxHigh.substring(0,boxHigh.length-2)) + deltaY;
+                changedBoxWide = parseInt(boxWide.substring(0,boxWide.length-2)) - deltaX;
+                changedBoxLeft = parseInt(boxLeft.substring(0,boxLeft.length-2)) + deltaX;
+                changedStyleHigh = parseInt(styleHeight.substring(0,styleHeight.length-2)) + deltaY;
+                changedStyleWide = parseInt(styleWidth.substring(0,styleWidth.length-2)) - deltaX;
+
+                parent.style.left =
+                    parseInt(styleLeft.substring(0,styleLeft.length-2)) + deltaX + "px";
+                parent.style.height = changedStyleHigh + "px";
+                parent.style.width = changedStyleWide + "px";
+                children[3].style.left = changedStyleWide - 5 + "px";
+                children[5].style.top = changedStyleHigh - 5 + "px";
+                children[7].style.left = changedStyleWide - 5 + "px";
+                children[7].style.top = changedStyleHigh - 5 + "px";
+
+                box.left = changedBoxLeft + "px";
+                box.top = changedBoxTop + "px";
+                box.high = changedBoxHigh + "px";
+                box.wide = changedBoxWide + "px";
+                box.upRight.x = changedBoxWide - 5 + "px";
+                box.bottomLeft.y = changedBoxHigh - 5 + "px";
+                box.bottomRight.x = changedBoxWide - 5 + "px";
+                box.bottomRight.y = changedBoxHigh - 5 + "px";
+                break;
+              case 'bottomRight':
+                changedBoxHigh = parseInt(boxHigh.substring(0,boxHigh.length-2)) + deltaY;
+                changedBoxWide = parseInt(boxWide.substring(0,boxWide.length-2)) + deltaX;
+                changedStyleHigh = parseInt(styleHeight.substring(0,styleHeight.length-2)) + deltaY;
+                changedStyleWide = parseInt(styleWidth.substring(0,styleWidth.length-2)) + deltaX;
+
+                parent.style.height = changedStyleHigh + "px";
+                parent.style.width = changedStyleWide + "px";
+                //children[3].style.transform = "translate3d(" + posX + "px, 0, 0) scale(1) rotate(0deg) ";
+                //children[5].style.transform = "translate3d(0, " + posY + "px, 0) scale(1) rotate(0deg) ";
+                children[3].style.left = changedStyleWide - 5 + "px";
+                children[5].style.top = changedStyleHigh - 5 + "px";
+                children[7].style.left = changedStyleWide - 5 + "px";
+                children[7].style.top = changedStyleHigh - 5 + "px";
+
+                box.high = changedBoxHigh + "px";
+                box.wide = changedBoxWide + "px";
+                box.upRight.x = changedBoxWide - 5 + "px";
+                box.bottomLeft.y = changedBoxHigh - 5 + "px";
+                box.bottomRight.x = changedBoxWide - 5 + "px";
+                box.bottomRight.y = changedBoxHigh - 5 + "px";
+                break;
+            }
+            /*e.target.parentNode.style.height =
                 parseInt(styleHeight.substring(0,styleHeight.length-2))
                 + deltaY + "px";
             box.high = parseInt(boxHigh.substring(0,boxHigh.length-2))
@@ -294,8 +415,7 @@ angular.module('starter.editControllers', [])
                 parseInt(styleWidth.substring(0,styleWidth.length-2))
                 + deltaX + "px";
             box.wide = parseInt(boxWide.substring(0,boxWide.length-2))
-                + deltaX + "px";
-            //console.log("after: "+box.high);
+                + deltaX + "px";*/
           }, point);
         });
       }
