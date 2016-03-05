@@ -18,8 +18,8 @@
 
 .point{
     position: absolute;
-    width: 10px;
-    height: 10px;
+    width: 15px;
+    height: 15px;
     border-radius: 50%;
     background-color: red;
 }
@@ -43,4 +43,7 @@
 
 .full-width {
     width: 100%;
+}
+.click:active {
+    color: #11c1f3;//浅蓝
 }

@@ -78,53 +78,55 @@ angular.module('starter.editControllers', [])
      */
     $rootScope.projects = Projects.loadProject();
 
-    $rootScope.projects = [
-      {
-        id: 0,
-        imgUrl: "img/projects/ionic.png",
-        name: "test1",
-        pageNumber:0,
-        description: "test1",
-        images: [
-          {
-            id: 0,
-            name: "inbox",
-            path: 'img/projects/inbox.png',
-            boxes: []
-          },
-          {
-            id: 1,
-            name: "detail",
-            path: 'img/projects/detail.png',
-            boxes: []
-          },
-          {
-            id: 2,
-            name: "reply",
-            path: 'img/projects/reply.png',
-            boxes: []
-          },
-          {
-            id: 3,
-            name: "search",
-            path: 'img/projects/search.png',
-            boxes: []
-          },
-          {
-            id: 4,
-            name: "new_mail",
-            path: 'img/projects/new_mail.png',
-            boxes: []
-          },
-          {
-            id: 5,
-            name: "outbox",
-            path: 'img/projects/inbox.png',
-            boxes: []
-          }
-        ]
-      }
-    ];
+    if($rootScope.projects==[]||$rootScope.projects==null||$rootScope.projects.length<1){//default value
+      $rootScope.projects = [
+        {
+          id: 0,
+          imgUrl: "img/projects/ionic.png",
+          name: "test1",
+          pageNumber:0,
+          description: "test1",
+          images: [
+            {
+              id: 0,
+              name: "inbox",
+              path: 'img/projects/inbox.png',
+              boxes: []
+            },
+            {
+              id: 1,
+              name: "detail",
+              path: 'img/projects/detail.png',
+              boxes: []
+            },
+            {
+              id: 2,
+              name: "reply",
+              path: 'img/projects/reply.png',
+              boxes: []
+            },
+            {
+              id: 3,
+              name: "search",
+              path: 'img/projects/search.png',
+              boxes: []
+            },
+            {
+              id: 4,
+              name: "new_mail",
+              path: 'img/projects/new_mail.png',
+              boxes: []
+            },
+            {
+              id: 5,
+              name: "outbox",
+              path: 'img/projects/inbox.png',
+              boxes: []
+            }
+          ]
+        }
+      ];
+    }
 
     $scope.edit = function(id) {
       $rootScope.curpj = $rootScope.projects[id];
@@ -283,7 +285,7 @@ angular.module('starter.editControllers', [])
 
       $scope.deleteBox = function() {
         var allBox = $rootScope.curImg.boxes;
-        var id = $scope.currentIndex;
+        var id = $rootScope.curBox.id;
         if(allBox.length!=1) {
           $rootScope.curImg.boxes = allBox.slice(0, id).concat(allBox.slice(id+1, allBox.length));
           angular.forEach($rootScope.curImg.boxes, function(item){
@@ -489,7 +491,7 @@ angular.module('starter.editControllers', [])
     $scope.curImgId = 0;//default
 
     $scope.check = function(){
-      console.log("wdwdw");
+      //console.log("wdwdw");
 
       if(!$scope.lock){
         //var coordinate = {x:0, y:0};
@@ -508,5 +510,9 @@ angular.module('starter.editControllers', [])
           }
         }
       }
+    };
+
+    $scope.share = function() {
+
     };
   });
