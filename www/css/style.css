@@ -40,3 +40,7 @@
 #popover-first{
     border-right: 1px dashed;
 }
+
+.full-width {
+    width: 100%;
+}

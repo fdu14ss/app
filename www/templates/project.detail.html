@@ -1,4 +1,4 @@
-<ion-view view-title="项目详细(项目名)">
+<ion-view view-title="{{curpj.name}}">
   <ion-nav-bar class="bar-positive">
     <ion-nav-buttons side="left">
       <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
@@ -14,20 +14,22 @@
   </ion-nav-bar>
 
   <ion-content>
-    <!--<div class="row" ng-repeat="imgSet in currentProject.images">
-      <div class="col" ng-repeat="img in imgSet" ng-click="edit(img.id)">
-        <img src="{{img.path}}" style="height: 180px;">
+    <div class="full-width text-center">
+      <div class="row" ng-repeat="imgSet in projectImagesToShow">
+        <div class="col" ng-repeat="img in imgSet" ng-click="edit(img.id)">
+          <img src="{{img.path}}" style="height: 160px;">
+          <p class="text-center">{{img.name}}</p>
+        </div>
       </div>
     </div>
-    -->
-    <div ng-repeat="img in curpj.images" ng-click="edit(img.id)">
+    <!--<div ng-repeat="img in curpj.images" ng-click="edit(img.id)">
       <img src="{{img.path}}" style="height: 180px;">
-    </div>
+    </div>-->
   </ion-content>
 
   <ion-footer-bar class="bar-positive">
     <div class="title">
-      <button class="button button-icon button-clear ion-play"></button>
+      <button class="button button-icon button-clear ion-play" ng-click="operate()"></button>
     </div>
   </ion-footer-bar>
 </ion-view>

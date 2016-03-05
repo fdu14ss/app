@@ -1,7 +1,15 @@
 <ion-view view-title="项目详细(项目名)">
     <ion-content>
-        <div ng-repeat="img in curpj.images" ng-click="linkTo(img.id)">
-            <img src="{{img.path}}" style="height: 180px;">
+        <div class="full-width text-center">
+            <div class="row" ng-repeat="imgSet in projectLinkImagesToShow">
+                <div class="col" ng-repeat="img in imgSet" ng-click="linkTo(img.id)">
+                    <img src="{{img.path}}" style="height: 160px;">
+                    <p class="text-center">{{img.name}}</p>
+                </div>
+            </div>
         </div>
+        <!--<div ng-repeat="img in curpj.images" ng-click="linkTo(img.id)">
+            <img src="{{img.path}}" style="height: 180px;">
+        </div>-->
     </ion-content>
 </ion-view>

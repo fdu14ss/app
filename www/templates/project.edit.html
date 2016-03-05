@@ -1,22 +1,31 @@
-<ion-view view-title="编辑项目(项目名)">
+<ion-view view-title="{{curImg.name}}">
   <ion-content scroll="false">
-    <div id="container" on-tap="newBox()">
-      <div id="image">
-        <img src="{{curImg.path}}" style="height: 540px;">
-      </div>
-      <div class="box" ng-repeat="box in curImg.boxes" on-tap="openPopover($event);setCurrentBox(box.id)"
-           style="left:{{box.left}}; top:{{box.top}}; width:{{box.wide}}; height:{{box.high}}">
-        <div class="point" style="left: {{box.upLeft.x}};top: {{box.upLeft.y}}" on-touch="move($event, box, 'upLeft')">
+    <div class="full-width text-center">
+      <div id="container" on-tap="newBox()">
+        <div id="image">
+          <img src="{{curImg.path}}" style="height: 540px;">
         </div>
-        <div class="point" style="left: {{box.upRight.x}};top: {{box.upRight.y}}" on-touch="move($event, box, 'upRight')">
-        </div>
-        <div class="point" style="left: {{box.bottomLeft.x}};top: {{box.bottomLeft.y}}" on-touch="move($event, box, 'bottomLeft')">
-        </div>
-        <div class="point" style="left: {{box.bottomRight.x}};top: {{box.bottomRight.y}}" on-touch="move($event, box, 'bottomRight')">
+        <div class="box" ng-repeat="box in curImg.boxes" on-tap="openPopover($event);setCurrentBox(box.id)"
+             style="left:{{box.left}}; top:{{box.top}}; width:{{box.wide}}; height:{{box.high}}">
+          <div class="point" style="left: {{box.upLeft.x}};top: {{box.upLeft.y}}" on-touch="move($event, box, 'upLeft')">
+          </div>
+          <div class="point" style="left: {{box.upRight.x}};top: {{box.upRight.y}}" on-touch="move($event, box, 'upRight')">
+          </div>
+          <div class="point" style="left: {{box.bottomLeft.x}};top: {{box.bottomLeft.y}}" on-touch="move($event, box, 'bottomLeft')">
+          </div>
+          <div class="point" style="left: {{box.bottomRight.x}};top: {{box.bottomRight.y}}" on-touch="move($event, box, 'bottomRight')">
+          </div>
         </div>
       </div>
     </div>
   </ion-content>
+
+  <ion-footer-bar class="bar-positive">
+    <div class="title">
+      <button class="button button-icon button-clear ion-play" ng-click="operate()"></button>
+    </div>
+  </ion-footer-bar>
+
   <script id="templates/popover.html" type="text/ng-template">
     <ion-popover-view id="popover">
       <ion-content>

@@ -1,0 +1,17 @@
+<ion-view view-title="{{curpj.name}}运行">
+    <ion-content scroll="false">
+        <div class="full-width text-center">
+            <div id="container" on-tap="check()">
+                <div id="image">
+                    <img src="{{curpj.images[curImgId].path}}" style="height: 540px;">
+                </div>
+            </div>
+        </div>
+    </ion-content>
+
+    <ion-footer-bar class="bar-positive">
+        <div class="title">
+            <button class="button button-icon button-clear ion-share" ng-click="share()"></button>
+        </div>
+    </ion-footer-bar>
+</ion-view>

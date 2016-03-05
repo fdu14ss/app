@@ -88,36 +88,42 @@ angular.module('starter.editControllers', [])
         images: [
           {
             id: 0,
+            name: "inbox",
             path: 'img/projects/inbox.png',
             boxes: []
           },
           {
             id: 1,
+            name: "detail",
             path: 'img/projects/detail.png',
             boxes: []
           },
           {
             id: 2,
+            name: "reply",
             path: 'img/projects/reply.png',
             boxes: []
           },
           {
             id: 3,
+            name: "search",
             path: 'img/projects/search.png',
             boxes: []
           },
           {
             id: 4,
+            name: "new_mail",
             path: 'img/projects/new_mail.png',
             boxes: []
           },
           {
             id: 5,
+            name: "outbox",
             path: 'img/projects/inbox.png',
             boxes: []
           }
         ]
-      },
+      }
     ];
 
     $scope.edit = function(id) {
@@ -178,15 +184,52 @@ angular.module('starter.editControllers', [])
   })
 
   .controller('ProjectsOthersCtrl', function($scope) {
-
+      $scope.projectsOthers = [
+        {
+          id: 1,
+          imgUrl:"img/projects/ionic.png",
+          author:"小李",
+          date: "2016-2-1",
+          time: "10:25",
+          name:"Demo@##",
+          address:"上海杨浦",
+          pageNumber:1,
+          description: "我是一个测试项目，我是测试项目3号"
+        },
+        {
+          id: 2,
+          imgUrl:"img/projects/ionic.png",
+          author:"小zhang",
+          date: "2016-1-1",
+          time: "09:25",
+          name:"exampleHAHA",
+          address:"上海浦东高科苑",
+          pageNumber:31,
+          description: "我是一个测试项目，我是测试项目4号"
+        }
+      ];
   })
 
   .controller('projectDetailCtrl',function($scope, $rootScope) {
 
+    $scope.projectImagesToShow = [];
+
+    for (var i = 0; i<$rootScope.curpj.images.length/3; i++) {
+      $scope.projectImagesToShow.push([
+        $rootScope.curpj.images[i*3],
+        $rootScope.curpj.images[i*3+1],
+        $rootScope.curpj.images[i*3+2]
+      ]);
+    }
+
     $scope.edit = function(id) {
       $rootScope.curImg = $rootScope.curpj.images[id];
       window.location.href="#app/projectEdit";
-    }
+    };
+
+    $scope.operate = function( ) {
+      window.location.href="#app/projectOperation";
+    };
 
   })
   .controller('projectEditCtrl', function($scope, $rootScope, $ionicPopover, Projects, $timeout) {
@@ -206,6 +249,10 @@ angular.module('starter.editControllers', [])
         $scope.popover.hide();
         $scope.lock = false;
       };
+
+      $scope.operate = function( ) {
+        window.location.href="#app/projectOperation";
+      }
 
       $scope.newBox = function(){
         if(!$scope.lock){
@@ -422,9 +469,44 @@ angular.module('starter.editControllers', [])
   })
 
   .controller('projectLinkCtrl', function($scope, $rootScope, Projects) {
+      $scope.projectLinkImagesToShow = [];
+
+      for (var i = 0; i<$rootScope.curpj.images.length/3; i++) {
+        $scope.projectLinkImagesToShow.push([
+          $rootScope.curpj.images[i*3],
+          $rootScope.curpj.images[i*3+1],
+          $rootScope.curpj.images[i*3+2]
+        ]);
+      }
+
       $scope.linkTo = function(id) {
         $rootScope.curBox.link = id;
         Projects.saveProject($rootScope.projects);
         window.location.href="#/app/projectEdit";
       }
+  })
+  .controller("projectOperationCtrl", function($scope, $rootScope) {
+    $scope.curImgId = 0;//default
+
+    $scope.check = function(){
+      console.log("wdwdw");
+
+      if(!$scope.lock){
+        //var coordinate = {x:0, y:0};
+        var x = event.gesture.touches[0].pageX;
+        var y = event.gesture.touches[0].pageY;
+
+        for(var i = 0; i < $rootScope.curpj.images[$scope.curImgId].boxes.length; i++) {
+          var box = $rootScope.curpj.images[$scope.curImgId].boxes[i];
+          var top = parseInt(box.top.substring(0,box.top.length-2))+25+43;
+          var left = parseInt(box.left.substring(0,box.left.length-2))+25;
+          var down = top + parseInt(box.high.substring(0,box.high.length-2));
+          var right = left + parseInt(box.wide.substring(0,box.wide.length-2));
+
+          if (x>left && x<right && y>top && y<down){
+            $scope.curImgId = box.link;
+          }
+        }
+      }
+    };
   });
