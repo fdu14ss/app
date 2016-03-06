@@ -491,7 +491,6 @@ angular.module('starter.editControllers', [])
     $scope.curImgId = 0;//default
 
     $scope.check = function(){
-      //console.log("wdwdw");
 
       if(!$scope.lock){
         //var coordinate = {x:0, y:0};
