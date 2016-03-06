@@ -1,6 +1,7 @@
+
 /**
  * Created by duocai on 2016/1/30.
- * 编辑项目路由配置
+ * 编辑项目路由配置wefd
  */
 angular.module('stater.editRouters', [])
   .config(function ($stateProvider) {
