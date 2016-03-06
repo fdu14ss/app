@@ -19,53 +19,6 @@ angular.module('starter.editControllers', ['ngCordova'])
     }
   })
 
-  .directive('ionPinch', function($timeout) {
-    return {
-      restrict: 'A',
-      link: function($scope, $element) {
-        var styleHeight = $element[0].parentNode.style.height.toString(),
-            styleWidth = $element[0].parentNode.style.width.toString();
-
-        $timeout(function() {
-          var posX = 0,
-              posY = 0,
-              lastPosX = 0,
-              lastPosY = 0,
-              scale = 1,
-              lastScale,
-              rotation = 0;
-          ionic.onGesture('touch drag transform dragend', function(e) {
-            e.gesture.srcEvent.preventDefault();
-            e.gesture.preventDefault();
-            switch (e.type) {
-              case 'drag':
-                posX = e.gesture.deltaX + lastPosX;
-                posY = e.gesture.deltaY + lastPosY;
-                e.target.parentNode.style.height =
-                    parseInt(styleHeight.substring(0,styleHeight.length-2))
-                    + e.gesture.deltaY + "px";
-                e.target.parentNode.style.width =
-                    parseInt(styleWidth.substring(0,styleWidth.length-2))
-                    + e.gesture.deltaX + "px";
-                break;
-              case 'dragend':
-                lastPosX = posX;
-                lastPosY = posY;
-                lastScale = scale;
-                break;
-            }
-            var transform =
-                "translate3d(" + posX + "px," + posY + "px, 0) " +
-                "scale(" + scale + ")" +
-                "rotate(" + rotation + "deg) ";
-            e.target.style.transform = transform;
-            e.target.style.webkitTransform = transform;
-          }, $element[0]);
-        });
-      }
-    };
-  })
-
   .controller('ProjectsMeCtrl', function($scope, $rootScope, $ionicModal, $ionicPopup, Projects) {
     $ionicModal.fromTemplateUrl('templates/create-project.html', {
       scope: $scope
@@ -212,7 +165,12 @@ angular.module('starter.editControllers', ['ngCordova'])
       ];
   })
 
-  .controller('projectDetailCtrl',function($scope, $rootScope,$cordovaCamera) {
+  .controller('projectDetailCtrl',function($scope, $rootScope,$cordovaCamera, $ionicPopover) {
+    $ionicPopover.fromTemplateUrl('templates/popover_detail.html', {
+      scope: $scope,
+    }).then(function(popover) {
+      $scope.popover = popover;
+    });
 
     $scope.projectImagesToShow = [];
 
@@ -253,15 +211,15 @@ angular.module('starter.editControllers', ['ngCordova'])
 
     $scope.takePhoto=function() {
       var options = {
-        quality: 100,                                            //相片质量0-100
-        destinationType: Camera.DestinationType.FILE_URI,        //返回类型：DATA_URL= 0，返回作为 base64 編碼字串。 FILE_URI=1，返回影像档的 URI。NATIVE_URI=2，返回图像本机URI (例如，資產庫)
-        sourceType: Camera.PictureSourceType.PHOTOLIBRARY,             //从哪里选择图片：PHOTOLIBRARY=0，相机拍照=1，SAVEDPHOTOALBUM=2。0和1其实都是本地图库
-        allowEdit: false,                                        //在选择之前允许修改截图
-        encodingType: Camera.EncodingType.JPEG,                   //保存的图片格式： JPEG = 0, PNG = 1
-        mediaType: 0,                                             //可选媒体类型：圖片=0，只允许选择图片將返回指定DestinationType的参数。 視頻格式=1，允许选择视频，最终返回 FILE_URI。ALLMEDIA= 2，允许所有媒体类型的选择。
-        cameraDirection: 0,                                       //枪后摄像头类型：Back= 0,Front-facing = 1
+        quality: 100,
+        destinationType: Camera.DestinationType.FILE_URI,
+        sourceType: Camera.PictureSourceType.CAMERA,
+        allowEdit: false,
+        encodingType: Camera.EncodingType.JPEG,
+        mediaType: 0,
+        cameraDirection: 0,
         popoverOptions: CameraPopoverOptions,
-        saveToPhotoAlbum: true                                   //保存进手机相册
+        saveToPhotoAlbum: true
       };
 
       $cordovaCamera.getPicture(options).then(function (imagePath) {
@@ -276,9 +234,36 @@ angular.module('starter.editControllers', ['ngCordova'])
         alert(err);
       });
     };
-    })
+
+    $scope.loadPhoto=function() {
+      var options = {
+        quality: 100,
+        destinationType: Camera.DestinationType.FILE_URI,
+        sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+        allowEdit: false,
+        encodingType: Camera.EncodingType.JPEG,
+        mediaType: 0,
+        cameraDirection: 0,
+        popoverOptions: CameraPopoverOptions,
+        saveToPhotoAlbum: true
+      };
+
+      $cordovaCamera.getPicture(options).then(function (imagePath) {
+        $rootScope.curpj.images.push({
+          id: $rootScope.curpj.images.length,
+          path: imagePath,
+          boxes: []
+        });
+        $scope.setShow();
+        $scope.apply();
+      }, function (err) {
+        alert(err);
+      });
+    };
+  })
+
   .controller('projectEditCtrl', function($scope, $rootScope, $ionicPopover, Projects, $timeout) {
-      $ionicPopover.fromTemplateUrl('templates/popover.html', {
+      $ionicPopover.fromTemplateUrl('templates/popover_edit.html', {
         scope: $scope,
       }).then(function(popover) {
         $scope.popover = popover;
@@ -394,8 +379,6 @@ angular.module('starter.editControllers', ['ngCordova'])
                 changedStyleWide = 0,
                 parent = e.target.parentNode,
                 children = parent.childNodes;
-            //e.target.style.transform = transform;
-            //e.target.style.webkitTransform = transform;
 
             switch (position) {
               case 'upLeft':
@@ -483,8 +466,6 @@ angular.module('starter.editControllers', ['ngCordova'])
 
                 parent.style.height = changedStyleHigh + "px";
                 parent.style.width = changedStyleWide + "px";
-                //children[3].style.transform = "translate3d(" + posX + "px, 0, 0) scale(1) rotate(0deg) ";
-                //children[5].style.transform = "translate3d(0, " + posY + "px, 0) scale(1) rotate(0deg) ";
                 children[3].style.left = changedStyleWide - 5 + "px";
                 children[5].style.top = changedStyleHigh - 5 + "px";
                 children[7].style.left = changedStyleWide - 5 + "px";
@@ -498,16 +479,6 @@ angular.module('starter.editControllers', ['ngCordova'])
                 box.bottomRight.y = changedBoxHigh - 5 + "px";
                 break;
             }
-            /*e.target.parentNode.style.height =
-                parseInt(styleHeight.substring(0,styleHeight.length-2))
-                + deltaY + "px";
-            box.high = parseInt(boxHigh.substring(0,boxHigh.length-2))
-                + deltaY + "px";
-            e.target.parentNode.style.width =
-                parseInt(styleWidth.substring(0,styleWidth.length-2))
-                + deltaX + "px";
-            box.wide = parseInt(boxWide.substring(0,boxWide.length-2))
-                + deltaX + "px";*/
           }, point);
         });
       }

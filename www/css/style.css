@@ -24,13 +24,13 @@
     background-color: red;
 }
 
-#popover{
+#popover_edit{
     width: 120px;
     height: 25px;
 
 }
 
-#popover ul li{
+#popover_edit ul li{
     float: left;
     width: 60px;
     font-size: 10pt;
@@ -46,4 +46,18 @@
 }
 .click:active {
     color: #11c1f3;//浅蓝
+}
+
+#popover_detail{
+    width: 120px;
+    height: 60px;
+}
+
+.popover_div{
+    text-align: center;
+    height: 30px;
+}
+
+#popover_detail_first{
+    border-bottom: 1px dashed;
 }

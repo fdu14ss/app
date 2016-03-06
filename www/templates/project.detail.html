@@ -8,7 +8,7 @@
     <ion-nav-buttons side="right">
       <button class="button button-icon button-clear ion-share">
       </button>
-      <button class="button button-icon button-clear ion-android-add" ng-click="takePhoto()">
+      <button class="button button-icon button-clear ion-android-add" ng-click="popover.show($event)">
       </button>
     </ion-nav-buttons>
   </ion-nav-bar>
@@ -32,4 +32,17 @@
       <p class="text-center click" ng-click="operate()">运行</p>
     </div>
   </ion-footer-bar>
+
+  <script id="templates/popover_detail.html" type="text/ng-template">
+    <ion-popover-view id="popover_detail">
+      <ion-content>
+        <div class="popover_div" id="popover_detail_first" ng-click="takePhoto();popover.hide()">
+          拍摄照片
+        </div>
+        <div class="popover_div" ng-click="loadPhoto();popover.hide()">
+          从相册中选取
+        </div>
+      </ion-content>
+    </ion-popover-view>
+  </script>
 </ion-view>
