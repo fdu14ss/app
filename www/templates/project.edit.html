@@ -27,10 +27,10 @@
   </ion-footer-bar>
 
   <script id="templates/popover_edit.html" type="text/ng-template">
-    <ion-popover-view id="popover_edit">
+    <ion-popover-view ng-class="{true: 'popover_edit_ios', false: 'popover_edit_android'}[isIOS]">
       <ion-content>
         <ul>
-          <li id="popover-first" on-tap="closePopover();deleteBox()">删除</li>
+          <li id="first_li" on-tap="closePopover();deleteBox()">删除</li>
           <li on-tap="closePopover();skip()">设置链接</li>
         </ul>
       </ion-content>

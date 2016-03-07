@@ -172,6 +172,10 @@ angular.module('starter.editControllers', ['ngCordova'])
       $scope.popover = popover;
     });
 
+    ionic.Platform.ready(function(){
+      $scope.isIOS = ionic.Platform.isIOS();
+    });
+
     $scope.projectImagesToShow = [];
 
     $scope.setShow = function () {
@@ -281,6 +285,11 @@ angular.module('starter.editControllers', ['ngCordova'])
       }).then(function(popover) {
         $scope.popover = popover;
       });
+
+      ionic.Platform.ready(function(){
+        $scope.isIOS = ionic.Platform.isIOS();
+      });
+
       $scope.lock = false;
 
       $scope.openPopover = function($event) {

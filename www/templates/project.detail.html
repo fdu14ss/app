@@ -22,9 +22,6 @@
         </div>
       </div>
     </div>
-    <!--<div ng-repeat="img in curpj.images" ng-click="edit(img.id)">
-      <img src="{{img.path}}" style="height: 180px;">
-    </div>-->
   </ion-content>
 
   <ion-footer-bar class="bar-positive">
@@ -34,12 +31,12 @@
   </ion-footer-bar>
 
   <script id="templates/popover_detail.html" type="text/ng-template">
-    <ion-popover-view id="popover_detail">
+    <ion-popover-view ng-class="{true: 'popover_detail_ios', false: 'popover_detail_android'}[isIOS]"">
       <ion-content>
-        <div class="popover_div" id="popover_detail_first" ng-click="takePhoto();popover.hide()">
+        <div id="first_div" ng-click="takePhoto();popover.hide()">
           拍摄照片
         </div>
-        <div class="popover_div" ng-click="loadPhoto();popover.hide()">
+        <div ng-click="loadPhoto();popover.hide()">
           从相册中选取
         </div>
       </ion-content>

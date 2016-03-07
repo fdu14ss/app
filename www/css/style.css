@@ -24,20 +24,35 @@
     background-color: red;
 }
 
-#popover_edit{
+.popover_edit_ios{
     width: 120px;
-    height: 25px;
-
+    height: 40px;
 }
 
-#popover_edit ul li{
+.popover_edit_ios ul li{
     float: left;
     width: 60px;
     font-size: 10pt;
     text-align: center;
 }
 
-#popover-first{
+.popover_edit_ios #first_li{
+    border-right: 1px dashed;
+}
+
+.popover_edit_android{
+    width: 120px;
+    height: 25px;
+}
+
+.popover_edit_android ul li{
+    float: left;
+    width: 60px;
+    font-size: 10pt;
+    text-align: center;
+}
+
+.popover_edit_android #first_li{
     border-right: 1px dashed;
 }
 
@@ -48,16 +63,31 @@
     color: #11c1f3;//浅蓝
 }
 
-#popover_detail{
+.popover_detail_ios{
+    width: 120px;
+    height: 80px;
+}
+
+.popover_detail_ios div{
+    font-size: 12pt;
+    text-align: center;
+}
+
+.popover_detail_ios #first_div{
+    height: 30px;
+    border-bottom: 1px dashed;
+}
+
+.popover_detail_android{
     width: 120px;
     height: 60px;
 }
 
-.popover_div{
+.popover_detail_android div{
     text-align: center;
     height: 30px;
 }
 
-#popover_detail_first{
+.popover_detail_android #first_div{
     border-bottom: 1px dashed;
 }
