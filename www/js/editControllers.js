@@ -347,38 +347,28 @@ angular.module('starter.editControllers', ['ngCordova'])
             boxLeft = box.left.toString(),
             boxTop = box.top.toString();
         $timeout(function() {
-          var posX = 0,
-              posY = 0,
-              lastPosX = 0,
-              lastPosY = 0,
-              deltaX = 0,
+          var deltaX = 0,
               deltaY = 0;
-          ionic.onGesture('touch drag transform dragend', function(e) {
+          ionic.onGesture('dragstart drag dragend', function(e) {
+            var changedBoxHigh = 0,
+                changedBoxWide = 0,
+                changedBoxLeft = 0,
+                changedBoxTop = 0,
+                changedStyleHigh = 0,
+                changedStyleWide = 0,
+                changedStyleLeft = 0,
+                changedStyleTop = 0,
+                parent = e.target.parentNode,
+                children = parent.childNodes;
+
             e.gesture.srcEvent.preventDefault();
             e.gesture.preventDefault();
             switch (e.type) {
               case 'drag':
                 deltaX = e.gesture.deltaX;
                 deltaY = e.gesture.deltaY;
-                posX = deltaX + lastPosX;
-                posY = deltaY + lastPosY;
-                break;
-              case 'dragend':
-                lastPosX = posX;
-                lastPosY = posY;
                 break;
             }
-
-            var transform =
-                "translate3d(" + posX + "px," + posY + "px, 0) scale(1) rotate(0deg) ",
-                changedBoxHigh = 0,
-                changedBoxWide = 0,
-                changedBoxLeft = 0,
-                changedBoxTop = 0,
-                changedStyleHigh = 0,
-                changedStyleWide = 0,
-                parent = e.target.parentNode,
-                children = parent.childNodes;
 
             switch (position) {
               case 'upLeft':
@@ -388,11 +378,24 @@ angular.module('starter.editControllers', ['ngCordova'])
                 changedBoxLeft = parseInt(boxLeft.substring(0,boxLeft.length-2)) + deltaX;
                 changedStyleHigh = parseInt(styleHeight.substring(0,styleHeight.length-2)) - deltaY;
                 changedStyleWide = parseInt(styleWidth.substring(0,styleWidth.length-2)) - deltaX;
+                changedStyleTop = parseInt(styleTop.substring(0,styleTop.length-2)) + deltaY;
+                changedStyleLeft = parseInt(styleLeft.substring(0,styleLeft.length-2)) + deltaX;
 
-                parent.style.left =
-                    parseInt(styleLeft.substring(0,styleLeft.length-2)) + deltaX + "px";
-                parent.style.top =
-                    parseInt(styleTop.substring(0,styleTop.length-2)) + deltaY + "px";
+                if(changedBoxHigh<50 && changedStyleHigh<50){
+                  changedBoxHigh = 50;
+                  changedStyleHigh = 50;
+                  changedBoxTop = parseInt(boxTop.substring(0,boxTop.length-2)) + (50 - boxHigh);
+                  changedStyleTop = parseInt(styleTop.substring(0,styleTop.length-2)) + (50 - styleHeight);
+                }
+                if(changedBoxWide<50 && changedStyleWide<50){
+                  changedBoxWide = 50;
+                  changedStyleWide = 50;
+                  changedBoxLeft = parseInt(boxLeft.substring(0,boxLeft.length-2)) + (50 - boxWide);
+                  changedStyleLeft = parseInt(styleLeft.substring(0,styleLeft.length-2)) + (50 - styleWidth);
+                }
+
+                parent.style.left = changedStyleLeft + "px";
+                parent.style.top = changedStyleTop + "px";
                 parent.style.height = changedStyleHigh + "px";
                 parent.style.width = changedStyleWide + "px";
                 children[3].style.left = changedStyleWide - 5 + "px";
@@ -415,9 +418,20 @@ angular.module('starter.editControllers', ['ngCordova'])
                 changedBoxTop = parseInt(boxTop.substring(0,boxTop.length-2)) + deltaY;
                 changedStyleHigh = parseInt(styleHeight.substring(0,styleHeight.length-2)) - deltaY;
                 changedStyleWide = parseInt(styleWidth.substring(0,styleWidth.length-2)) + deltaX;
+                changedStyleTop = parseInt(styleTop.substring(0,styleTop.length-2)) + deltaY;
 
-                parent.style.top =
-                    parseInt(styleTop.substring(0,styleTop.length-2)) + deltaY + "px";
+                if(changedBoxHigh<50 && changedStyleHigh<50){
+                  changedBoxHigh = 50;
+                  changedStyleHigh = 50;
+                  changedBoxTop = parseInt(boxTop.substring(0,boxTop.length-2)) + (50 - boxHigh);
+                  changedStyleTop = parseInt(styleTop.substring(0,styleTop.length-2)) + (50 - styleHeight);
+                }
+                if(changedBoxWide<50 && changedStyleWide<50){
+                  changedBoxWide = 50;
+                  changedStyleWide = 50;
+                }
+
+                parent.style.top = changedStyleTop + "px";
                 parent.style.height = changedStyleHigh + "px";
                 parent.style.width = changedStyleWide + "px";
                 children[3].style.left = changedStyleWide - 5 + "px";
@@ -439,9 +453,20 @@ angular.module('starter.editControllers', ['ngCordova'])
                 changedBoxLeft = parseInt(boxLeft.substring(0,boxLeft.length-2)) + deltaX;
                 changedStyleHigh = parseInt(styleHeight.substring(0,styleHeight.length-2)) + deltaY;
                 changedStyleWide = parseInt(styleWidth.substring(0,styleWidth.length-2)) - deltaX;
+                changedStyleLeft = parseInt(styleLeft.substring(0,styleLeft.length-2)) + deltaX;
 
-                parent.style.left =
-                    parseInt(styleLeft.substring(0,styleLeft.length-2)) + deltaX + "px";
+                if(changedBoxHigh<50 && changedStyleHigh<50){
+                  changedBoxHigh = 50;
+                  changedStyleHigh = 50;
+                }
+                if(changedBoxWide<50 && changedStyleWide<50){
+                  changedBoxWide = 50;
+                  changedStyleWide = 50;
+                  changedBoxLeft = parseInt(boxLeft.substring(0,boxLeft.length-2)) + (50 - boxWide);
+                  changedStyleLeft = parseInt(styleLeft.substring(0,styleLeft.length-2)) + (50 - styleWidth);
+                }
+
+                parent.style.left = changedStyleLeft + "px";
                 parent.style.height = changedStyleHigh + "px";
                 parent.style.width = changedStyleWide + "px";
                 children[3].style.left = changedStyleWide - 5 + "px";
@@ -450,7 +475,6 @@ angular.module('starter.editControllers', ['ngCordova'])
                 children[7].style.top = changedStyleHigh - 5 + "px";
 
                 box.left = changedBoxLeft + "px";
-                box.top = changedBoxTop + "px";
                 box.high = changedBoxHigh + "px";
                 box.wide = changedBoxWide + "px";
                 box.upRight.x = changedBoxWide - 5 + "px";
@@ -463,6 +487,15 @@ angular.module('starter.editControllers', ['ngCordova'])
                 changedBoxWide = parseInt(boxWide.substring(0,boxWide.length-2)) + deltaX;
                 changedStyleHigh = parseInt(styleHeight.substring(0,styleHeight.length-2)) + deltaY;
                 changedStyleWide = parseInt(styleWidth.substring(0,styleWidth.length-2)) + deltaX;
+
+                if(changedBoxHigh<50 && changedStyleHigh<50){
+                  changedBoxHigh = 50;
+                  changedStyleHigh = 50;
+                }
+                if(changedBoxWide<50 && changedStyleWide<50){
+                  changedBoxWide = 50;
+                  changedStyleWide = 50;
+                }
 
                 parent.style.height = changedStyleHigh + "px";
                 parent.style.width = changedStyleWide + "px";
@@ -479,6 +512,7 @@ angular.module('starter.editControllers', ['ngCordova'])
                 box.bottomRight.y = changedBoxHigh - 5 + "px";
                 break;
             }
+            Projects.saveProject($rootScope.projects);
           }, point);
         });
       }
