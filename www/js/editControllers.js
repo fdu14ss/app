@@ -89,7 +89,7 @@ angular.module('starter.editControllers', ['ngCordova'])
     $scope.delete = function(id) {
       var popup = $ionicPopup.confirm({
         title: '删除项目',
-        template: '你确定要删除吗?',
+        template: '你确定要删除吗?'
       });
       popup.then(function(res) {
         if(res){
@@ -138,8 +138,8 @@ angular.module('starter.editControllers', ['ngCordova'])
     };
   })
 
-  .controller('ProjectsOthersCtrl', function($scope) {
-      $scope.projectsOthers = [
+  .controller('ProjectsOthersCtrl', function($scope,$rootScope) {
+      $rootScope.projectsOthers = [
         {
           id: 1,
           imgUrl:"img/projects/ionic.png",
@@ -165,9 +165,9 @@ angular.module('starter.editControllers', ['ngCordova'])
       ];
   })
 
-  .controller('projectDetailCtrl',function($scope, $rootScope,$cordovaCamera, $ionicPopover) {
+  .controller('projectDetailCtrl',function($scope, $rootScope, $cordovaCamera, $ionicPopover) {
     $ionicPopover.fromTemplateUrl('templates/popover_detail.html', {
-      scope: $scope,
+      scope: $scope
     }).then(function(popover) {
       $scope.popover = popover;
     });
@@ -207,6 +207,19 @@ angular.module('starter.editControllers', ['ngCordova'])
 
     $scope.operate = function( ) {
       window.location.href="#app/projectOperation";
+    };
+
+    $scope.shareProject = function () {
+      $rootScope.curpj.author = "N4A";
+      $rootScope.curpj.address = "上海浦东";
+      $rootScope.curpj.time = "09:36";
+      $scope.temp = [];
+      $scope.temp.push($rootScope.curpj);
+      for(var i= 0; i<$rootScope.projectsOthers.length; i++) {
+        $scope.temp.push($rootScope.projectsOthers[i]);
+      }
+      $rootScope.projectsOthers=$scope.temp;
+      window.location.href="#app/projects/others";
     };
 
     $scope.takePhoto=function() {
@@ -264,7 +277,7 @@ angular.module('starter.editControllers', ['ngCordova'])
 
   .controller('projectEditCtrl', function($scope, $rootScope, $ionicPopover, Projects, $timeout) {
       $ionicPopover.fromTemplateUrl('templates/popover_edit.html', {
-        scope: $scope,
+        scope: $scope
       }).then(function(popover) {
         $scope.popover = popover;
       });
@@ -282,7 +295,7 @@ angular.module('starter.editControllers', ['ngCordova'])
 
       $scope.operate = function( ) {
         window.location.href="#app/projectOperation";
-      }
+      };
 
       $scope.newBox = function(){
         if(!$scope.lock){
