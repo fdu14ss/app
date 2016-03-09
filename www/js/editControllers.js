@@ -311,11 +311,17 @@ angular.module('starter.editControllers', ['ngCordova'])
     }
   })
 
-  .controller('projectEditCtrl', function($scope, $rootScope, $ionicPopover, Projects, $timeout) {
+  .controller('projectEditCtrl', function($scope, $rootScope, $ionicModal, $ionicPopover, Projects, $timeout) {
       $ionicPopover.fromTemplateUrl('templates/popover_edit.html', {
         scope: $scope
       }).then(function(popover) {
         $scope.popover = popover;
+      });
+
+      $ionicModal.fromTemplateUrl('templates/use-plugin.html', {
+        scope: $scope
+      }).then(function(modal) {
+        $scope.pluginModal = modal;
       });
 
       ionic.Platform.ready(function(){
@@ -569,7 +575,22 @@ angular.module('starter.editControllers', ['ngCordova'])
             Projects.saveProject($rootScope.projects);
           }, point);
         });
-      }
+      };
+
+      $scope.openUsePlugin = function() {
+        $scope.pluginModal.show();
+        $scope.closePopover();
+
+      };
+
+      $scope.closeUsePlugin = function() {
+        $scope.pluginModal.hide();
+      };
+
+      $scope.closeUsePluginAndAlert = function() {
+        alert("设置成功");
+        $scope.pluginModal.hide();
+      };
   })
 
   .controller('projectLinkCtrl', function($scope, $rootScope, Projects) {

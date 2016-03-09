@@ -30,8 +30,9 @@
     <ion-popover-view ng-class="{true: 'popover_edit_ios', false: 'popover_edit_android'}[isIOS]">
       <ion-content>
         <ul>
-          <li id="first_li" on-tap="closePopover();deleteBox()">删除</li>
-          <li on-tap="closePopover();skip()">设置链接</li>
+          <li class="li_with_border_right" on-tap="closePopover();deleteBox()">删除</li>
+          <li class="li_with_border_right" on-tap="closePopover();skip()">设置链接</li>
+          <li on-tap="openUsePlugin()">使用插件</li>
         </ul>
       </ion-content>
     </ion-popover-view>

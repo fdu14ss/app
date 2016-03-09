@@ -25,7 +25,7 @@
 }
 
 .popover_edit_ios{
-    width: 120px;
+    width: 180px;
     height: 40px;
 }
 
@@ -36,12 +36,8 @@
     text-align: center;
 }
 
-.popover_edit_ios #first_li{
-    border-right: 1px dashed;
-}
-
 .popover_edit_android{
-    width: 120px;
+    width: 180px;
     height: 25px;
 }
 
@@ -52,7 +48,7 @@
     text-align: center;
 }
 
-.popover_edit_android #first_li{
+.li_with_border_right{
     border-right: 1px dashed;
 }
 
