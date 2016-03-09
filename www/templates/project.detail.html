@@ -8,16 +8,16 @@
     <ion-nav-buttons side="right">
       <button class="button button-icon button-clear ion-share" ng-click="shareProject()">
       </button>
-      <button class="button button-icon button-clear ion-android-add" ng-click="popover.show($event)">
+      <button class="button button-icon button-clear ion-android-add" ng-click="photoPopover.show($event)">
       </button>
     </ion-nav-buttons>
   </ion-nav-bar>
 
-  <ion-content>
+  <ion-content scroll="true">
     <div class="full-width text-center">
       <div class="row" ng-repeat="imgSet in projectImagesToShow">
-        <div class="col" ng-repeat="img in imgSet" ng-click="edit(img.id)">
-          <img src="{{img.path}}" style="height: 160px;">
+        <div class="col" ng-repeat="img in imgSet" ng-click="edit(img.id)" on-hold="openDeletePopover($event, img.id)">
+          <img src="{{img.path}}" style="height: 160px; width: 108px">
           <p class="text-center">{{img.name}}</p>
         </div>
       </div>
@@ -30,14 +30,24 @@
     </div>
   </ion-footer-bar>
 
-  <script id="templates/popover_detail.html" type="text/ng-template">
-    <ion-popover-view ng-class="{true: 'popover_detail_ios', false: 'popover_detail_android'}[isIOS]"">
+  <script id="templates/popover_detail_photo.html" type="text/ng-template">
+    <ion-popover-view ng-class="{true: 'popover_detail_photo_ios', false: 'popover_detail_photo_android'}[isIOS]">
       <ion-content>
-        <div id="first_div" ng-click="takePhoto();popover.hide()">
+        <div id="first_div" ng-click="takePhoto()">
           拍摄照片
         </div>
-        <div ng-click="loadPhoto();popover.hide()">
+        <div ng-click="loadPhoto()">
           从相册中选取
+        </div>
+      </ion-content>
+    </ion-popover-view>
+  </script>
+
+  <script id="templates/popover_detail_delete.html" type="text/ng-template">
+    <ion-popover-view ng-class="{true: 'popover_detail_delete_ios', false: 'popover_detail_delete_android'}[isIOS]">
+      <ion-content>
+        <div ng-click="deletePhoto()">
+          删除
         </div>
       </ion-content>
     </ion-popover-view>

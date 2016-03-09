@@ -165,11 +165,17 @@ angular.module('starter.editControllers', ['ngCordova'])
       ];
   })
 
-  .controller('projectDetailCtrl',function($scope, $rootScope, $cordovaCamera, $ionicPopover) {
-    $ionicPopover.fromTemplateUrl('templates/popover_detail.html', {
+  .controller('projectDetailCtrl',function($scope, $rootScope, $cordovaCamera, $ionicPopover, Projects) {
+    $ionicPopover.fromTemplateUrl('templates/popover_detail_photo.html', {
       scope: $scope
     }).then(function(popover) {
-      $scope.popover = popover;
+      $scope.photoPopover = popover;
+    });
+
+    $ionicPopover.fromTemplateUrl('templates/popover_detail_delete.html', {
+      scope: $scope
+    }).then(function(popover) {
+      $scope.deletePopover = popover;
     });
 
     ionic.Platform.ready(function(){
@@ -250,6 +256,7 @@ angular.module('starter.editControllers', ['ngCordova'])
       }, function (err) {
         alert(err);
       });
+      $scope.photoPopover.hide();
     };
 
     $scope.loadPhoto=function() {
@@ -276,7 +283,32 @@ angular.module('starter.editControllers', ['ngCordova'])
       }, function (err) {
         alert(err);
       });
+      $scope.photoPopover.hide();
     };
+
+    $scope.openDeletePopover = function(event, id) {
+      $scope.deletePopover.show(event);
+      $scope.deleteImgId = id;
+    }
+
+    $scope.deletePhoto = function() {
+      var allImg = $rootScope.curpj.images;
+      var id = $scope.deleteImgId;
+      if(allImg.length!=1) {
+        $rootScope.curpj.images = allImg.slice(0, id).concat(allImg.slice(id+1, allImg.length));
+        angular.forEach($rootScope.curpj.images, function(item){
+          if(item.id > id){
+            item.id -= 1;
+          }
+        });
+      }
+      else {
+        $rootScope.curpj.images = [];
+      }
+      $scope.deletePopover.hide();
+      $scope.setShow();
+      Projects.saveProject($rootScope.projects);
+    }
   })
 
   .controller('projectEditCtrl', function($scope, $rootScope, $ionicPopover, Projects, $timeout) {
@@ -292,8 +324,8 @@ angular.module('starter.editControllers', ['ngCordova'])
 
       $scope.lock = false;
 
-      $scope.openPopover = function($event) {
-        $scope.popover.show($event);
+      $scope.openPopover = function(event) {
+        $scope.popover.show(event);
         $scope.lock = true;
       };
 

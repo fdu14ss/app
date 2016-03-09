@@ -63,31 +63,43 @@
     color: #11c1f3;//浅蓝
 }
 
-.popover_detail_ios{
+.popover_detail_photo_ios{
     width: 120px;
     height: 80px;
 }
 
-.popover_detail_ios div{
+.popover_detail_photo_ios div{
     font-size: 12pt;
     text-align: center;
 }
 
-.popover_detail_ios #first_div{
+.popover_detail_photo_ios #first_div{
     height: 30px;
     border-bottom: 1px dashed;
 }
 
-.popover_detail_android{
+.popover_detail_photo_android{
     width: 120px;
     height: 60px;
 }
 
-.popover_detail_android div{
+.popover_detail_photo_android div{
     text-align: center;
     height: 30px;
 }
 
-.popover_detail_android #first_div{
+.popover_detail_photo_android #first_div{
     border-bottom: 1px dashed;
+}
+
+.popover_detail_delete_ios{
+    width: 40px;
+    height: 40px;
+    text-align: center;
+}
+
+.popover_detail_delete_android{
+    width: 40px;
+    height: 30px;
+    text-align: center;
 }
