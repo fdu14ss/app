@@ -32,105 +32,103 @@ angular.module('starter.editControllers', ['ngCordova'])
     $rootScope.projects = Projects.loadProject();
 
     //if($rootScope.projects==[]||$rootScope.projects==null||$rootScope.projects.length<1){//default value
-    //  $rootScope.projects = [
-    //    {
-    //      id: 0,
-    //      imgUrl: "img/projects/ionic.png",
-    //      name: "test1",
-    //      pageNumber:0,
-    //      description: "test1",
-    //      images: [
-    //        {
-    //          id: 0,
-    //          name: "inbox",
-    //          path: 'img/projects/inbox.png',
-    //          boxes: []
-    //        },
-    //        {
-    //          id: 1,
-    //          name: "detail",
-    //          path: 'img/projects/detail.png',
-    //          boxes: []
-    //        },
-    //        {
-    //          id: 2,
-    //          name: "reply",
-    //          path: 'img/projects/reply.png',
-    //          boxes: []
-    //        },
-    //        {
-    //          id: 3,
-    //          name: "search",
-    //          path: 'img/projects/search.png',
-    //          boxes: []
-    //        },
-    //        {
-    //          id: 4,
-    //          name: "new_mail",
-    //          path: 'img/projects/new_mail.png',
-    //          boxes: []
-    //        },
-    //        {
-    //          id: 5,
-    //          name: "outbox",
-    //          path: 'img/projects/inbox.png',
-    //          boxes: []
-    //        }
-    //      ],
-    //      plugins: [
-    //        {
-    //          name: "室内星",
-    //          id: 0,
-    //          isSelected: false,
-    //          visibility: "hidden"
-    //        }
-    //      ],
-    //      controls: [
-    //        {
-    //          name: "Input",
-    //          id: 0,
-    //          isSelected: false,
-    //          visibility: "hidden"
-    //        },
-    //        {
-    //          name: "Submit",
-    //          id: 1,
-    //          isSelected: false,
-    //          visibility: "hidden"
-    //        },
-    //        {
-    //          name: "Back",
-    //          id: 2,
-    //          isSelected: false,
-    //          visibility: "hidden"
-    //        },
-    //        {
-    //          name: "Setting",
-    //          id: 3,
-    //          isSelected: false,
-    //          visibility: "hidden"
-    //        },
-    //        {
-    //          name: "Checkbox",
-    //          id: 4,
-    //          isSelected: false,
-    //          visibility: "hidden"
-    //        },
-    //        {
-    //          name: "Upload",
-    //          id: 5,
-    //          isSelected: false,
-    //          visibility: "hidden"
-    //        }
-    //      ]
-    //    }
-    //  ];
+      $rootScope.projects = [
+        {
+          id: 0,
+          imgUrl: "img/projects/ionic.png",
+          name: "test1",
+          pageNumber:0,
+          description: "test1",
+          images: [
+            {
+              id: 0,
+              name: "inbox",
+              path: 'img/projects/inbox.png',
+              boxes: []
+            },
+            {
+              id: 1,
+              name: "detail",
+              path: 'img/projects/detail.png',
+              boxes: []
+            },
+            {
+              id: 2,
+              name: "reply",
+              path: 'img/projects/reply.png',
+              boxes: []
+            },
+            {
+              id: 3,
+              name: "search",
+              path: 'img/projects/search.png',
+              boxes: []
+            },
+            {
+              id: 4,
+              name: "new_mail",
+              path: 'img/projects/new_mail.JPG',
+              boxes: []
+            },
+            {
+              id: 5,
+              name: "outbox",
+              path: 'img/projects/inbox.png',
+              boxes: []
+            }
+          ],
+          plugins: [
+            {
+              name: "室内星",
+              id: 0,
+              isSelected: false,
+              visibility: "hidden"
+            }
+          ],
+          controls: [
+            {
+              name: "Input",
+              id: 0,
+              isSelected: false,
+              visibility: "hidden"
+            },
+            {
+              name: "Submit",
+              id: 1,
+              isSelected: false,
+              visibility: "hidden"
+            },
+            {
+              name: "Back",
+              id: 2,
+              isSelected: false,
+              visibility: "hidden"
+            },
+            {
+              name: "Setting",
+              id: 3,
+              isSelected: false,
+              visibility: "hidden"
+            },
+            {
+              name: "Checkbox",
+              id: 4,
+              isSelected: false,
+              visibility: "hidden"
+            },
+            {
+              name: "Upload",
+              id: 5,
+              isSelected: false,
+              visibility: "hidden"
+            }
+          ]
+        }
+      ];
     //}
 
     $scope.edit = function(id) {
       $rootScope.curpj = $rootScope.projects[id];
-      console.log(id);
-      console.log($rootScope.curpj.images.length);
       window.location.href = "#app/projectDetail";
     };
 
@@ -281,7 +279,6 @@ angular.module('starter.editControllers', ['ngCordova'])
     $scope.setShow = function() {
       $scope.projectImagesToShow = [];
       if($rootScope.curpj.images!=[]){
-        console.log(123);
         for (var i = 0; i<$rootScope.curpj.images.length/3; i++) {
           if (i * 3 + 2 < $rootScope.curpj.images.length) {
             $scope.projectImagesToShow.push([
@@ -518,6 +515,7 @@ angular.module('starter.editControllers', ['ngCordova'])
                 changedStyleWide = 0,
                 changedStyleLeft = 0,
                 changedStyleTop = 0,
+                minLength = 20,
                 parent = e.target.parentNode,
                 children = parent.childNodes;
 
@@ -541,17 +539,17 @@ angular.module('starter.editControllers', ['ngCordova'])
                 changedStyleTop = parseInt(styleTop.substring(0,styleTop.length-2)) + deltaY;
                 changedStyleLeft = parseInt(styleLeft.substring(0,styleLeft.length-2)) + deltaX;
 
-                if(changedBoxHigh<50 && changedStyleHigh<50){
-                  changedBoxHigh = 50;
-                  changedStyleHigh = 50;
-                  changedBoxTop = parseInt(boxTop.substring(0,boxTop.length-2)) + (50 - boxHigh);
-                  changedStyleTop = parseInt(styleTop.substring(0,styleTop.length-2)) + (50 - styleHeight);
+                if(changedBoxHigh<minLength && changedStyleHigh<minLength){
+                  changedBoxHigh = minLength;
+                  changedStyleHigh = minLength;
+                  changedBoxTop = parseInt(boxTop.substring(0,boxTop.length-2)) + (minLength - boxHigh);
+                  changedStyleTop = parseInt(styleTop.substring(0,styleTop.length-2)) + (minLength - styleHeight);
                 }
-                if(changedBoxWide<50 && changedStyleWide<50){
-                  changedBoxWide = 50;
-                  changedStyleWide = 50;
-                  changedBoxLeft = parseInt(boxLeft.substring(0,boxLeft.length-2)) + (50 - boxWide);
-                  changedStyleLeft = parseInt(styleLeft.substring(0,styleLeft.length-2)) + (50 - styleWidth);
+                if(changedBoxWide<minLength && changedStyleWide<minLength){
+                  changedBoxWide = minLength;
+                  changedStyleWide = minLength;
+                  changedBoxLeft = parseInt(boxLeft.substring(0,boxLeft.length-2)) + (minLength - boxWide);
+                  changedStyleLeft = parseInt(styleLeft.substring(0,styleLeft.length-2)) + (minLength - styleWidth);
                 }
 
                 parent.style.left = changedStyleLeft + "px";
@@ -580,15 +578,15 @@ angular.module('starter.editControllers', ['ngCordova'])
                 changedStyleWide = parseInt(styleWidth.substring(0,styleWidth.length-2)) + deltaX;
                 changedStyleTop = parseInt(styleTop.substring(0,styleTop.length-2)) + deltaY;
 
-                if(changedBoxHigh<50 && changedStyleHigh<50){
-                  changedBoxHigh = 50;
-                  changedStyleHigh = 50;
-                  changedBoxTop = parseInt(boxTop.substring(0,boxTop.length-2)) + (50 - boxHigh);
-                  changedStyleTop = parseInt(styleTop.substring(0,styleTop.length-2)) + (50 - styleHeight);
+                if(changedBoxHigh<minLength && changedStyleHigh<minLength){
+                  changedBoxHigh = minLength;
+                  changedStyleHigh = minLength;
+                  changedBoxTop = parseInt(boxTop.substring(0,boxTop.length-2)) + (minLength - boxHigh);
+                  changedStyleTop = parseInt(styleTop.substring(0,styleTop.length-2)) + (minLength - styleHeight);
                 }
-                if(changedBoxWide<50 && changedStyleWide<50){
-                  changedBoxWide = 50;
-                  changedStyleWide = 50;
+                if(changedBoxWide<minLength && changedStyleWide<minLength){
+                  changedBoxWide = minLength;
+                  changedStyleWide = minLength;
                 }
 
                 parent.style.top = changedStyleTop + "px";
@@ -615,15 +613,15 @@ angular.module('starter.editControllers', ['ngCordova'])
                 changedStyleWide = parseInt(styleWidth.substring(0,styleWidth.length-2)) - deltaX;
                 changedStyleLeft = parseInt(styleLeft.substring(0,styleLeft.length-2)) + deltaX;
 
-                if(changedBoxHigh<50 && changedStyleHigh<50){
-                  changedBoxHigh = 50;
-                  changedStyleHigh = 50;
+                if(changedBoxHigh<minLength && changedStyleHigh<minLength){
+                  changedBoxHigh = minLength;
+                  changedStyleHigh = minLength;
                 }
-                if(changedBoxWide<50 && changedStyleWide<50){
-                  changedBoxWide = 50;
-                  changedStyleWide = 50;
-                  changedBoxLeft = parseInt(boxLeft.substring(0,boxLeft.length-2)) + (50 - boxWide);
-                  changedStyleLeft = parseInt(styleLeft.substring(0,styleLeft.length-2)) + (50 - styleWidth);
+                if(changedBoxWide<minLength && changedStyleWide<minLength){
+                  changedBoxWide = minLength;
+                  changedStyleWide = minLength;
+                  changedBoxLeft = parseInt(boxLeft.substring(0,boxLeft.length-2)) + (minLength - boxWide);
+                  changedStyleLeft = parseInt(styleLeft.substring(0,styleLeft.length-2)) + (minLength - styleWidth);
                 }
 
                 parent.style.left = changedStyleLeft + "px";
@@ -648,13 +646,13 @@ angular.module('starter.editControllers', ['ngCordova'])
                 changedStyleHigh = parseInt(styleHeight.substring(0,styleHeight.length-2)) + deltaY;
                 changedStyleWide = parseInt(styleWidth.substring(0,styleWidth.length-2)) + deltaX;
 
-                if(changedBoxHigh<50 && changedStyleHigh<50){
-                  changedBoxHigh = 50;
-                  changedStyleHigh = 50;
+                if(changedBoxHigh<minLength && changedStyleHigh<minLength){
+                  changedBoxHigh = minLength;
+                  changedStyleHigh = minLength;
                 }
-                if(changedBoxWide<50 && changedStyleWide<50){
-                  changedBoxWide = 50;
-                  changedStyleWide = 50;
+                if(changedBoxWide<minLength && changedStyleWide<minLength){
+                  changedBoxWide = minLength;
+                  changedStyleWide = minLength;
                 }
 
                 parent.style.height = changedStyleHigh + "px";
