@@ -3,10 +3,21 @@
         <h1 class="title">使用插件</h1>
         <button class="button button-clear" ng-click="closeUsePlugin()">返回</button>
     </ion-header-bar>
-    <ion-content>
+    <ion-content scroll="false">
+        <h3 class="plugin_h3">插件</h3>
         <ion-list>
-            <ion-item ng-click="closeUsePluginAndAlert()">
-                indoorstar
+            <ion-item ng-repeat="plugin in curpj.plugins" ng-click="setPlugin(plugin)">
+                {{plugin.name}}
+                <button class="button-icon ion-checkmark" style="visibility: {{plugin.visibility}}">
+                </button>
+            </ion-item>
+        </ion-list>
+        <h3 class="plugin_h3">控件</h3>
+        <ion-list>
+            <ion-item ng-repeat="control in curpj.controls" ng-click="setControl(control)">
+                {{control.name}}
+                <button class="button-icon ion-checkmark" style="visibility: {{control.visibility}}">
+                </button>
             </ion-item>
         </ion-list>
     </ion-content>

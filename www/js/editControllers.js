@@ -31,58 +31,106 @@ angular.module('starter.editControllers', ['ngCordova'])
      */
     $rootScope.projects = Projects.loadProject();
 
-    if($rootScope.projects==[]||$rootScope.projects==null||$rootScope.projects.length<1){//default value
-      $rootScope.projects = [
-        {
-          id: 0,
-          imgUrl: "img/projects/ionic.png",
-          name: "test1",
-          pageNumber:0,
-          description: "test1",
-          images: [
-            {
-              id: 0,
-              name: "inbox",
-              path: 'img/projects/inbox.png',
-              boxes: []
-            },
-            {
-              id: 1,
-              name: "detail",
-              path: 'img/projects/detail.png',
-              boxes: []
-            },
-            {
-              id: 2,
-              name: "reply",
-              path: 'img/projects/reply.png',
-              boxes: []
-            },
-            {
-              id: 3,
-              name: "search",
-              path: 'img/projects/search.png',
-              boxes: []
-            },
-            {
-              id: 4,
-              name: "new_mail",
-              path: 'img/projects/new_mail.png',
-              boxes: []
-            },
-            {
-              id: 5,
-              name: "outbox",
-              path: 'img/projects/inbox.png',
-              boxes: []
-            }
-          ]
-        }
-      ];
-    }
+    //if($rootScope.projects==[]||$rootScope.projects==null||$rootScope.projects.length<1){//default value
+    //  $rootScope.projects = [
+    //    {
+    //      id: 0,
+    //      imgUrl: "img/projects/ionic.png",
+    //      name: "test1",
+    //      pageNumber:0,
+    //      description: "test1",
+    //      images: [
+    //        {
+    //          id: 0,
+    //          name: "inbox",
+    //          path: 'img/projects/inbox.png',
+    //          boxes: []
+    //        },
+    //        {
+    //          id: 1,
+    //          name: "detail",
+    //          path: 'img/projects/detail.png',
+    //          boxes: []
+    //        },
+    //        {
+    //          id: 2,
+    //          name: "reply",
+    //          path: 'img/projects/reply.png',
+    //          boxes: []
+    //        },
+    //        {
+    //          id: 3,
+    //          name: "search",
+    //          path: 'img/projects/search.png',
+    //          boxes: []
+    //        },
+    //        {
+    //          id: 4,
+    //          name: "new_mail",
+    //          path: 'img/projects/new_mail.png',
+    //          boxes: []
+    //        },
+    //        {
+    //          id: 5,
+    //          name: "outbox",
+    //          path: 'img/projects/inbox.png',
+    //          boxes: []
+    //        }
+    //      ],
+    //      plugins: [
+    //        {
+    //          name: "室内星",
+    //          id: 0,
+    //          isSelected: false,
+    //          visibility: "hidden"
+    //        }
+    //      ],
+    //      controls: [
+    //        {
+    //          name: "Input",
+    //          id: 0,
+    //          isSelected: false,
+    //          visibility: "hidden"
+    //        },
+    //        {
+    //          name: "Submit",
+    //          id: 1,
+    //          isSelected: false,
+    //          visibility: "hidden"
+    //        },
+    //        {
+    //          name: "Back",
+    //          id: 2,
+    //          isSelected: false,
+    //          visibility: "hidden"
+    //        },
+    //        {
+    //          name: "Setting",
+    //          id: 3,
+    //          isSelected: false,
+    //          visibility: "hidden"
+    //        },
+    //        {
+    //          name: "Checkbox",
+    //          id: 4,
+    //          isSelected: false,
+    //          visibility: "hidden"
+    //        },
+    //        {
+    //          name: "Upload",
+    //          id: 5,
+    //          isSelected: false,
+    //          visibility: "hidden"
+    //        }
+    //      ]
+    //    }
+    //  ];
+    //}
 
     $scope.edit = function(id) {
       $rootScope.curpj = $rootScope.projects[id];
+      console.log(id);
+      console.log($rootScope.curpj.images.length);
       window.location.href = "#app/projectDetail";
     };
 
@@ -127,7 +175,53 @@ angular.module('starter.editControllers', ['ngCordova'])
               name: project.name,
               pageNumber: 0,
               description: project.description,
-              images: []
+              images: [],
+              plugins: [
+                {
+                  name: "室内星",
+                  id: 0,
+                  isSelected: false,
+                  visibility: "hidden"
+                }
+              ],
+              controls: [
+                {
+                  name: "Input",
+                  id: 0,
+                  isSelected: false,
+                  visibility: "hidden"
+                },
+                {
+                  name: "Submit",
+                  id: 1,
+                  isSelected: false,
+                  visibility: "hidden"
+                },
+                {
+                  name: "Back",
+                  id: 2,
+                  isSelected: false,
+                  visibility: "hidden"
+                },
+                {
+                  name: "Setting",
+                  id: 3,
+                  isSelected: false,
+                  visibility: "hidden"
+                },
+                {
+                  name: "Checkbox",
+                  id: 4,
+                  isSelected: false,
+                  visibility: "hidden"
+                },
+                {
+                  name: "Upload",
+                  id: 5,
+                  isSelected: false,
+                  visibility: "hidden"
+                }
+              ]
             }
         );
         $scope.projectModal.hide();
@@ -184,27 +278,32 @@ angular.module('starter.editControllers', ['ngCordova'])
 
     $scope.projectImagesToShow = [];
 
-    $scope.setShow = function () {
+    $scope.setShow = function() {
       $scope.projectImagesToShow = [];
-      for (var i = 0; i<$rootScope.curpj.images.length/3; i++) {
-        if (i * 3 + 2 < $rootScope.curpj.images.length) {
-          $scope.projectImagesToShow.push([
-            $rootScope.curpj.images[i * 3],
-            $rootScope.curpj.images[i * 3 + 1],
-            $rootScope.curpj.images[i * 3 + 2]
-          ]);
+      if($rootScope.curpj.images!=[]){
+        console.log(123);
+        for (var i = 0; i<$rootScope.curpj.images.length/3; i++) {
+          if (i * 3 + 2 < $rootScope.curpj.images.length) {
+            $scope.projectImagesToShow.push([
+              $rootScope.curpj.images[i * 3],
+              $rootScope.curpj.images[i * 3 + 1],
+              $rootScope.curpj.images[i * 3 + 2]
+            ]);
+          }
+          else if (i * 3 + 1 < $rootScope.curpj.images.length) {
+            $scope.projectImagesToShow.push([
+              $rootScope.curpj.images[i * 3],
+              $rootScope.curpj.images[i * 3 + 1]
+            ]);
+          }
+          else {
+            $scope.projectImagesToShow.push([
+              $rootScope.curpj.images[i * 3]
+            ]);
+          }
         }
-        else if (i * 3 + 1 < $rootScope.curpj.images.length) {
-          $scope.projectImagesToShow.push([
-            $rootScope.curpj.images[i * 3],
-            $rootScope.curpj.images[i * 3 + 1]
-          ]);
-        }
-        else {
-          $scope.projectImagesToShow.push([
-            $rootScope.curpj.images[i * 3]
-          ]);
-        }
+      }else{
+        $scope.projectImagesToShow = [];
       }
     };
 
@@ -254,7 +353,7 @@ angular.module('starter.editControllers', ['ngCordova'])
         $scope.setShow();
         $scope.apply();
       }, function (err) {
-        alert(err);
+
       });
       $scope.photoPopover.hide();
     };
@@ -278,6 +377,7 @@ angular.module('starter.editControllers', ['ngCordova'])
           path: imagePath,
           boxes: []
         });
+        alert(imagePath);
         $scope.setShow();
         $scope.apply();
       }, function (err) {
@@ -289,7 +389,7 @@ angular.module('starter.editControllers', ['ngCordova'])
     $scope.openDeletePopover = function(event, id) {
       $scope.deletePopover.show(event);
       $scope.deleteImgId = id;
-    }
+    };
 
     $scope.deletePhoto = function() {
       var allImg = $rootScope.curpj.images;
@@ -308,10 +408,10 @@ angular.module('starter.editControllers', ['ngCordova'])
       $scope.deletePopover.hide();
       $scope.setShow();
       Projects.saveProject($rootScope.projects);
-    }
+    };
   })
 
-  .controller('projectEditCtrl', function($scope, $rootScope, $ionicModal, $ionicPopover, Projects, $timeout) {
+  .controller('projectEditCtrl', function($scope, $rootScope, $ionicModal, $ionicPopover, $ionicPopup, Projects, $timeout) {
       $ionicPopover.fromTemplateUrl('templates/popover_edit.html', {
         scope: $scope
       }).then(function(popover) {
@@ -583,14 +683,66 @@ angular.module('starter.editControllers', ['ngCordova'])
 
       };
 
+      /*
+       use-plugin.html
+       */
       $scope.closeUsePlugin = function() {
         $scope.pluginModal.hide();
       };
 
-      $scope.closeUsePluginAndAlert = function() {
-        alert("设置成功");
-        $scope.pluginModal.hide();
+      $scope.setPlugin = function(plugin) {
+        if(plugin.isSelected == false){
+          var alertPopup = $ionicPopup.alert({
+            title: 'Origo',
+            template: '设置成功'
+          });
+          alertPopup.then(function(res) {
+            angular.forEach($rootScope.curpj.plugins, function(item){
+              if(item.isSelected == true){
+                item.isSelected = false;
+                item.visibility = "hidden";
+              }
+            });
+            plugin.isSelected = true;
+            plugin.visibility = "visible";
+            $scope.pluginModal.hide();
+          });
+        }else{
+          var alertPopup = $ionicPopup.alert({
+            title: 'Origo',
+            template: '设置取消'
+          });
+          alertPopup.then(function(res) {
+            plugin.isSelected = false;
+            plugin.visibility = "hidden";
+            $scope.pluginModal.hide();
+          });
+        }
       };
+
+      $scope.setControl = function(control) {
+        if(control.isSelected == false){
+          var alertPopup = $ionicPopup.alert({
+            title: 'Origo',
+            template: '设置成功'
+          });
+          alertPopup.then(function(res) {
+            control.isSelected = true;
+            control.visibility = "visible";
+            $scope.pluginModal.hide();
+          });
+        }else{
+          var alertPopup = $ionicPopup.alert({
+            title: 'Origo',
+            template: '设置取消'
+          });
+          alertPopup.then(function(res) {
+            control.isSelected = false;
+            control.visibility = "hidden";
+            $scope.pluginModal.hide();
+          });
+        }
+      }
   })
 
   .controller('projectLinkCtrl', function($scope, $rootScope, Projects) {
@@ -616,7 +768,6 @@ angular.module('starter.editControllers', ['ngCordova'])
     $scope.check = function(){
 
       if(!$scope.lock){
-        //var coordinate = {x:0, y:0};
         var x = event.gesture.touches[0].pageX;
         var y = event.gesture.touches[0].pageY;
 
